@@ -9,32 +9,10 @@ import {
 } from './lib/fetchFromOpenAi'
 
 // the system prompt explains to gpt-4 what we want it to do and how it should behave.
-const systemPrompt = `You are an expert web developer who specializes in building working website prototypes from low-fidelity wireframes.
-Your job is to accept low-fidelity wireframes, then create a working prototype using HTML, CSS, and JavaScript, and finally send back the results.
-The results should be a single HTML file.
-Use tailwind to style the website.
-Put any additional CSS styles in a style tag and any JavaScript in a script tag.
-Use unpkg or skypack to import any required dependencies.
-Use Google fonts to pull in any open source fonts you require.
-If you have any images, load them from Unsplash or use solid colored rectangles.
+const systemPrompt = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
 
-The wireframes may include flow charts, diagrams, labels, arrows, sticky notes, and other features that should inform your work.
-If there are screenshots or images, use them to inform the colors, fonts, and layout of your website.
-Use your best judgement to determine whether what you see should be part of the user interface, or else is just an annotation.
 
-Use what you know about applications and user experience to fill in any implicit business logic in the wireframes. Flesh it out, make it real!
-
-The user may also provide you with the html of a previous design that they want you to iterate from.
-In the wireframe, the previous design's html will appear as a white rectangle.
-Use their notes, together with the previous design, to inform your next result.
-
-Sometimes it's hard for you to read the writing in the wireframes.
-For this reason, all text from the wireframes will be provided to you as a list of strings, separated by newlines.
-Use the provided list of text from the wireframes as a reference if any text is hard to read.
-
-You love your designers and want them to be happy. Incorporating their feedback and notes and producing working websites makes them happy.
-
-When sent new wireframes, respond ONLY with the contents of the html file.`
+When sent new wireframes, respond ONLY with the a json of Poll title and 4 options.`
 
 export async function makeReal(editor: Editor) {
 	// we can't make anything real if there's nothing selected
@@ -128,18 +106,20 @@ function populateResponseShape(
 		throw new Error(openAiResponse.error.message)
 	}
 
-	// extract the html from the response
-	const message = openAiResponse.choices[0].message.content
-	const start = message.indexOf('<!DOCTYPE html>')
-	const end = message.indexOf('</html>')
-	const html = message.slice(start, end + '</html>'.length)
+	// // extract the html from the response
+	// const message = openAiResponse.choices[0].message.content
+	// const start = message.indexOf('<!DOCTYPE html>')
+	// const end = message.indexOf('</html>')
+	// const html = message.slice(start, end + '</html>'.length)
 
-	// update the response shape we created earlier with the content
-	editor.updateShape<ResponseShape>({
-		id: responseShapeId,
-		type: 'response',
-		props: { html },
-	})
+	// // update the response shape we created earlier with the content
+	// editor.updateShape<ResponseShape>({
+	// 	id: responseShapeId,
+	// 	type: 'response',
+	// 	props: { html },
+	// })
+
+	console.log(openAiResponse)
 }
 
 function makeEmptyResponseShape(editor: Editor) {
