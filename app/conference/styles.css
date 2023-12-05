@@ -1,0 +1,40 @@
+/* Container for the entire conference component */
+.conference-component {
+	position: relative;
+	height: 100vh; /* Adjust height as needed */
+}
+
+.conference-title {
+	color: #000;
+}
+
+/* Side pane for conference section */
+.conference-section {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 300px; /* Adjust width as needed */
+	height: 100%;
+	z-index: 2; /* Higher z-index to be on top */
+	background-color: #f0f0f0; /* Light background for visibility */
+	overflow-y: auto; /* Enable scroll for overflow content */
+	box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+}
+
+/* Main editor section */
+.editor {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1; /* Lower z-index to be beneath the side pane */
+	/* Additional styling for the editor */
+}
+
+/* Additional styling for peers container */
+.peers-container {
+	padding: 10px;
+}
+
+/* You can add more specific styles here */
