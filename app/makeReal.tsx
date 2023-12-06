@@ -45,8 +45,19 @@ export async function makeReal(editor: Editor) {
 			messages: prompt,
 		})
 
-		// populate the response shape with the html we got back from openai.
-		populateResponseShape(editor, responseShapeId, openAiResponse)
+		// const id = Date.now().toString()
+		// await hmsActions.interactivityCenter
+		// 	.createPoll({
+		// 		id,
+		// 		title: inputs.name,
+		// 		type: 'poll',
+		// 		rolesThatCanViewResponses: ['host'],
+		// 	})
+		// 	.then(() => handleCreate(id))
+		// 	.catch((err) => console.log(err.message))
+
+		// // populate the response shape with the html we got back from openai.
+		// populateResponseShape(editor, responseShapeId, openAiResponse)
 	} catch (e) {
 		// if something went wrong, get rid of the unnecessary response shape
 		editor.deleteShape(responseShapeId)

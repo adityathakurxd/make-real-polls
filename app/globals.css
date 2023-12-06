@@ -16,6 +16,10 @@
 	box-sizing: border-box;
 }
 
+.poll-div {
+	z-index: 999;
+}
+
 .tlui-help-menu {
 	display: none !important;
 }

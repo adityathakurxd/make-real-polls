@@ -26,7 +26,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	right: 0;
+	right: 400px;
 	bottom: 0;
 	z-index: 1; /* Lower z-index to be beneath the side pane */
 	/* Additional styling for the editor */

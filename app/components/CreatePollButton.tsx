@@ -2,7 +2,7 @@ import { useEditor, useToasts } from '@tldraw/tldraw'
 import { useCallback } from 'react'
 import { makeReal } from '../makeReal'
 
-export function MakeRealButton() {
+export function CreatePollButton() {
 	const editor = useEditor()
 	const { addToast } = useToasts()
 

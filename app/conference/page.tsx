@@ -4,7 +4,7 @@ import '@tldraw/tldraw/tldraw.css'
 import dynamic from 'next/dynamic'
 import { ResponseShapeUtil } from '../ResponseShape/ResponseShape'
 import { TldrawLogo } from '../components/TldrawLogo'
-import { MakeRealButton } from '../components/MakeRealButton'
+import { CreatePollButton } from '../components/CreatePollButton'
 import './styles.css'
 
 const Tldraw = dynamic(async () => (await import('@tldraw/tldraw')).Tldraw, {
@@ -27,7 +27,7 @@ function Conference() {
 				</div>
 			</div>
 			<div className="editor">
-				<Tldraw persistenceKey="make-real" shareZone={<MakeRealButton />} shapeUtils={shapeUtils}>
+				<Tldraw persistenceKey="make-real" shareZone={<CreatePollButton />} shapeUtils={shapeUtils}>
 					<TldrawLogo />
 				</Tldraw>
 			</div>
