@@ -1,4 +1,5 @@
-import { Fragment, ReactNode } from 'react'
+'use client'
+import { Fragment, ReactNode, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import classes from './Modal.module.css'
 
@@ -22,14 +23,20 @@ const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
 	)
 }
 
-const portalElement = document.getElementById('overlays') as HTMLElement
-
 type ModalProps = {
 	onClose: () => void
 	children: ReactNode
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
+	const [isBrowser, setIsBrowser] = useState(false)
+
+	useEffect(() => {
+		setIsBrowser(true)
+	}, [])
+	const portalElement = isBrowser ? document.getElementById('overlays') : null
+	if (!portalElement) return null
+
 	return (
 		<Fragment>
 			{ReactDOM.createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
