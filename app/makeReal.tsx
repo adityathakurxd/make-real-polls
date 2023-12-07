@@ -14,7 +14,7 @@ const systemPrompt = `You are expert at engaging audience through interative pol
 
 When sent new wireframes, respond ONLY with the a json of Poll title and 4 options.`
 
-export async function makeReal(editor: Editor) {
+export async function makeReal(editor: Editor, showPollFormHandler: (value: any) => void) {
 	// we can't make anything real if there's nothing selected
 	const selectedShapes = editor.getSelectedShapes()
 	if (selectedShapes.length === 0) {
@@ -26,7 +26,7 @@ export async function makeReal(editor: Editor) {
 
 	// then, we create an empty response shape. we'll put the response from openai in here, but for
 	// now it'll just show a spinner so the user knows we're working on it.
-	const responseShapeId = makeEmptyResponseShape(editor)
+	// const responseShapeId = makeEmptyResponseShape(editor)
 
 	try {
 		// If you're using the API key input, we preference the key from there.
@@ -44,6 +44,9 @@ export async function makeReal(editor: Editor) {
 			temperature: 0,
 			messages: prompt,
 		})
+		console.log(openAiResponse)
+
+		showPollFormHandler(openAiResponse)
 
 		// const id = Date.now().toString()
 		// await hmsActions.interactivityCenter

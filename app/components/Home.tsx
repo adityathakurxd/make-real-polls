@@ -3,15 +3,23 @@ import JoinForm from './JoinForm'
 import { useEffect, useState } from 'react'
 import { selectIsConnectedToRoom, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import Footer from './Footer'
-import Conference from '../conference/page'
+import Conference from './Conference'
 import ViewPoll from './ViewPoll'
+import PollForm from './CreatePoll'
 
 export default function Home() {
 	const isConnected = useHMSStore(selectIsConnectedToRoom)
 	const hmsActions = useHMSActions()
-
+	const [pollFormIsShown, setPollFormIsShownn] = useState(false)
 	const [pollModalIsShown, setPollModalIsShown] = useState(false)
-	// const [pollNotificationData, setPollNotificationData] = useState()
+
+	const showPollFormHandler = () => {
+		setPollFormIsShownn(true)
+	}
+
+	const hidePollFormHandler = () => {
+		setPollFormIsShownn(false)
+	}
 
 	const showPollModalHandler = () => {
 		setPollModalIsShown(true)
@@ -31,6 +39,7 @@ export default function Home() {
 
 	return (
 		<div className="App">
+			{pollFormIsShown && <PollForm onClose={hidePollFormHandler} />}
 			{pollModalIsShown && <ViewPoll onClose={hidePollModalHandler} />}
 
 			{isConnected ? (
@@ -43,6 +52,7 @@ export default function Home() {
 			)}
 			<div className="poll-div">
 				<button onClick={showPollModalHandler}>View Poll</button>
+				<button onClick={showPollFormHandler}>Create Poll Form</button>
 			</div>
 		</div>
 	)
