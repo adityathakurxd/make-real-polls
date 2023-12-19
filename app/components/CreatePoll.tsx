@@ -37,50 +37,54 @@ const PollForm: React.FC<PollFormProps> = (props) => {
 	// 	}
 	// }, [props.apiData])
 
-	const handleCreate = async (id: string) => {
-		console.log(`POLL CREATED with ${id}`)
-		await hmsActions.interactivityCenter.addQuestionsToPoll(id, [
-			{
-				text: inputs.text || '',
-				options: [
-					{
-						text: inputs.first || '',
-						isCorrectAnswer: false,
-					},
-					{
-						text: inputs.second || '',
-						isCorrectAnswer: false,
-					},
-				],
-				skippable: true,
-				type: 'single-choice' as HMSPollQuestionType,
-			},
-		])
-		await hmsActions.interactivityCenter.startPoll(id)
-		props.onClose()
-	}
-
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const name = event.target.name
 		const value = event.target.value
 		setInputs((values) => ({ ...values, [name]: value }))
 	}
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault()
+	const printAPIData = () => {
+		console.log(props.apiData)
+	}
+	const createPollOnClick = async () => {
 		const id = Date.now().toString()
 		await hmsActions.interactivityCenter
 			.createPoll({
 				id,
-				title: inputs.name || '',
+				title: props.apiData?.['Poll title'] || '',
 				type: 'poll',
 				rolesThatCanViewResponses: ['host'],
 			})
-			.then(() => handleCreate(id))
 			.catch((err: Error) => console.log(err.message))
-	}
-	const printAPIData = () => {
-		console.log(props.apiData)
+		console.log('POLL Created')
+		await hmsActions.interactivityCenter.addQuestionsToPoll(id, [
+			{
+				text: props.apiData?.['Poll title'] || '',
+				type: 'single-choice' as HMSPollQuestionType,
+				options: [
+					{
+						text: props.apiData?.options[0] || '',
+						isCorrectAnswer: false,
+					},
+					{
+						text: props.apiData?.options[1] || '',
+						isCorrectAnswer: false,
+					},
+					{
+						text: props.apiData?.options[2] || '',
+						isCorrectAnswer: false,
+					},
+					{
+						text: props.apiData?.options[3] || '',
+						isCorrectAnswer: false,
+					},
+				],
+				skippable: true,
+			},
+		])
+		console.log('Adding options')
+		await hmsActions.interactivityCenter.startPoll(id)
+		console.log('POLL Started')
 	}
 
 	return (
@@ -90,8 +94,9 @@ const PollForm: React.FC<PollFormProps> = (props) => {
 			<p>{props.apiData?.options[1]}</p>
 			<p>{props.apiData?.options[2]}</p>
 			<p>{props.apiData?.options[3]}</p>
-			<form onSubmit={handleSubmit}>
-				{/* <label>
+			<button onClick={createPollOnClick}>Start Poll</button>
+			{/* <form onSubmit={handleSubmit}> */}
+			{/* <label>
 					Enter a Name for the Poll:
 					<div className="input-container">
 						<input type="text" name="name" value={inputs.name || ''} onChange={handleChange} />
@@ -115,8 +120,8 @@ const PollForm: React.FC<PollFormProps> = (props) => {
 						<input type="text" name="second" value={inputs.second || ''} onChange={handleChange} />
 					</div>
 				</label> */}
-				<input type="submit" />
-			</form>
+			{/* <input type="submit" /> */}
+			{/* </form> */}
 		</Modal>
 	)
 }
