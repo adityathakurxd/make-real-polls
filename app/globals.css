@@ -256,9 +256,8 @@ form h2,
 .control-bar {
 	display: flex;
 	position: fixed;
-	right: 0;
+	left: 0;
 	bottom: 0;
-
 	padding: 15px;
 	justify-content: center;
 	z-index: 10;

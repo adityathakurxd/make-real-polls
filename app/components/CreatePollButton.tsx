@@ -9,10 +9,10 @@ export function CreatePollButton() {
 	const { addToast } = useToasts()
 
 	const [pollFormIsShown, setPollFormIsShown] = useState(false)
-	const [apiData, seApiData] = useState()
+	const [apiData, setApiData] = useState()
 
 	const showPollFormHandler = (value: any) => {
-		seApiData(value) // Store the API data in a state
+		setApiData(value) // Store the API data in a state
 		setPollFormIsShown(true)
 	}
 
@@ -21,7 +21,7 @@ export function CreatePollButton() {
 	}
 
 	const handleClick = useCallback(async () => {
-		console.log('make real')
+		console.log('creating poll')
 		try {
 			await makeReal(editor, showPollFormHandler)
 		} catch (e) {

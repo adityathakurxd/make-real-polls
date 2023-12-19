@@ -4,7 +4,12 @@ import { useHMSActions } from '@100mslive/react-sdk'
 
 interface PollFormProps {
 	onClose: () => void
-	apiData?: Inputs // Assuming apiData has the same structure as Inputs
+	apiData?: PollData // Assuming apiData has the same structure as Inputs
+}
+
+interface PollData {
+	'Poll title': string
+	options: string[]
 }
 
 export enum HMSPollQuestionType {
@@ -26,11 +31,11 @@ const PollForm: React.FC<PollFormProps> = (props) => {
 	const [inputs, setInputs] = useState<Inputs>({})
 
 	// Update the form state when apiData changes
-	useEffect(() => {
-		if (props.apiData) {
-			setInputs(props.apiData)
-		}
-	}, [props.apiData])
+	// useEffect(() => {
+	// 	if (props.apiData) {
+	// 		setInputs(props.apiData)
+	// 	}
+	// }, [props.apiData])
 
 	const handleCreate = async (id: string) => {
 		console.log(`POLL CREATED with ${id}`)
@@ -74,11 +79,19 @@ const PollForm: React.FC<PollFormProps> = (props) => {
 			.then(() => handleCreate(id))
 			.catch((err: Error) => console.log(err.message))
 	}
+	const printAPIData = () => {
+		console.log(props.apiData)
+	}
 
 	return (
 		<Modal onClose={props.onClose}>
+			<h1>{props.apiData?.['Poll title']}</h1>
+			<p>{props.apiData?.options[0]}</p>
+			<p>{props.apiData?.options[1]}</p>
+			<p>{props.apiData?.options[2]}</p>
+			<p>{props.apiData?.options[3]}</p>
 			<form onSubmit={handleSubmit}>
-				<label>
+				{/* <label>
 					Enter a Name for the Poll:
 					<div className="input-container">
 						<input type="text" name="name" value={inputs.name || ''} onChange={handleChange} />
@@ -101,7 +114,7 @@ const PollForm: React.FC<PollFormProps> = (props) => {
 					<div className="input-container">
 						<input type="text" name="second" value={inputs.second || ''} onChange={handleChange} />
 					</div>
-				</label>
+				</label> */}
 				<input type="submit" />
 			</form>
 		</Modal>
