@@ -67,10 +67,10 @@ export default function Home() {
 			default:
 				break
 		}
-	}, [notification])
+	}, [notification, localPeerID])
 
 	return (
-		<div className="App">
+		<div className={`App ${isConnected ? 'call' : 'preview'}`}>
 			{pollFormIsShown && <PollForm onClose={hidePollFormHandler} />}
 			{pollModalIsShown && <ViewPoll onClose={hidePollModalHandler} />}
 

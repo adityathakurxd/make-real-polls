@@ -28,6 +28,7 @@ const JoinForm = () => {
 		e.preventDefault()
 
 		const { name: userName = '', roomCode = '' } = inputValues
+		console.log('ollo clicked', userName, roomCode)
 
 		try {
 			const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
