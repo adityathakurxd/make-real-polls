@@ -12,7 +12,7 @@ import {
 const systemPrompt = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
 
 
-When sent new wireframes, respond ONLY with the a json of Poll title and 4 options without json header.`
+When sent new image as input, respond ONLY with the a json of Poll title and array called options with 4 string values without any words like "json" or characters like "\`".`
 
 export async function makeReal(editor: Editor, showPollFormHandler: (value: any) => void) {
 	// we can't make anything real if there's nothing selected

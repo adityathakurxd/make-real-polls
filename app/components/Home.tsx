@@ -13,7 +13,7 @@ import {
 import Footer from './Footer'
 import Conference from './Conference'
 import ViewPoll from './ViewPoll'
-import PollForm from './CreatePoll'
+import PollForm from './StartPollForm'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -83,10 +83,6 @@ export default function Home() {
 			) : (
 				<JoinForm />
 			)}
-			<div className="poll-div">
-				<button onClick={showPollModalHandler}>View Poll</button>
-				<button onClick={showPollFormHandler}>Create Poll Form</button>
-			</div>
 		</div>
 	)
 }
