@@ -16,9 +16,11 @@
 	width: 300px; /* Adjust width as needed */
 	height: 100%;
 	z-index: 2; /* Higher z-index to be on top */
-	background-color: #f0f0f0; /* Light background for visibility */
+	background-color: var(--surface_default); /* Light background for visibility */
 	overflow-y: auto; /* Enable scroll for overflow content */
-	box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 /* Main editor section */
@@ -35,6 +37,7 @@
 /* Additional styling for peers container */
 .peers-container {
 	padding: 10px;
+	width: 100%;
 }
 
 /* You can add more specific styles here */
