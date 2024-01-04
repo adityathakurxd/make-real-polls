@@ -221,11 +221,6 @@ input::placeholder {
 	cursor: pointer;
 }
 
-form h2,
-.conference-section h2 {
-	margin-bottom: 20px;
-}
-
 .btn-danger {
 	border: 1px solid transparent;
 	border-radius: 4px;
@@ -241,12 +236,16 @@ form h2,
 	padding: 20px 30px;
 	max-width: 960px;
 	margin: 0 auto;
+	max-height: 100vh;
+	box-sizing: border-box;
+	overflow-y: auto;
 }
 
 .conference-section h2 {
 	text-align: center;
 	font-size: 32px;
 	margin-top: 0;
+	color: var(--on_surface);
 }
 
 .tile {
@@ -290,9 +289,10 @@ form h2,
 
 
 .peer-container {
-	padding: 10px;
+	padding: 8px;
 	position: relative;
 	height: 180px;
+	margin-bottom: 16px;
 }
 
 .control-bar {
@@ -303,7 +303,7 @@ form h2,
 	padding: 15px 0;
 	justify-content: center;
 	z-index: 10;
-	width: 360px;
+	width: 300px;
 }
 
 .control-bar > *:not(:first-child) {

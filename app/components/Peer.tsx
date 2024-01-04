@@ -1,6 +1,6 @@
-import { PersonIcon } from '@/node_modules/@100mslive/react-icons/dist/index'
-import { HMSPeer, useVideo, useAVToggle } from '@100mslive/react-sdk'
 import React from 'react'
+import { HMSPeer, useVideo, selectVideoTrackByID, useHMSStore } from '@100mslive/react-sdk'
+import { PersonIcon } from '@100mslive/react-icons'
 
 // Define the type for the peer prop
 interface PeerProps {
@@ -12,7 +12,9 @@ const Peer: React.FC<PeerProps> = ({ peer }) => {
 		trackId: peer.videoTrack,
 	})
 
-	const { isLocalVideoEnabled } = useAVToggle()
+	const videoTrackId = peer.videoTrack
+	const track = useHMSStore(selectVideoTrackByID(videoTrackId))
+	const isVideoEnabled = !!track?.enabled
 
 	return (
 		<div className="peer-container">
@@ -21,9 +23,7 @@ const Peer: React.FC<PeerProps> = ({ peer }) => {
 			</div>
 			<video
 				ref={videoRef}
-				className={`tile ${peer.isLocal ? 'local' : ''} ${
-					isLocalVideoEnabled ? '' : 'muted-video'
-				}`}
+				className={`tile ${peer.isLocal ? 'local' : ''} ${isVideoEnabled ? '' : 'muted-video'}`}
 				autoPlay
 				muted
 				playsInline
