@@ -9,34 +9,12 @@ import {
 } from './lib/fetchFromOpenAi'
 
 // the system prompt explains to gpt-4 what we want it to do and how it should behave.
-const systemPrompt = `You are an expert web developer who specializes in building working website prototypes from low-fidelity wireframes.
-Your job is to accept low-fidelity wireframes, then create a working prototype using HTML, CSS, and JavaScript, and finally send back the results.
-The results should be a single HTML file.
-Use tailwind to style the website.
-Put any additional CSS styles in a style tag and any JavaScript in a script tag.
-Use unpkg or skypack to import any required dependencies.
-Use Google fonts to pull in any open source fonts you require.
-If you have any images, load them from Unsplash or use solid colored rectangles.
+const systemPrompt = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
 
-The wireframes may include flow charts, diagrams, labels, arrows, sticky notes, and other features that should inform your work.
-If there are screenshots or images, use them to inform the colors, fonts, and layout of your website.
-Use your best judgement to determine whether what you see should be part of the user interface, or else is just an annotation.
 
-Use what you know about applications and user experience to fill in any implicit business logic in the wireframes. Flesh it out, make it real!
+When sent new image as input, respond ONLY with the a json of Poll title and array called options with 4 string values without any words like "json" or characters like "\`".`
 
-The user may also provide you with the html of a previous design that they want you to iterate from.
-In the wireframe, the previous design's html will appear as a white rectangle.
-Use their notes, together with the previous design, to inform your next result.
-
-Sometimes it's hard for you to read the writing in the wireframes.
-For this reason, all text from the wireframes will be provided to you as a list of strings, separated by newlines.
-Use the provided list of text from the wireframes as a reference if any text is hard to read.
-
-You love your designers and want them to be happy. Incorporating their feedback and notes and producing working websites makes them happy.
-
-When sent new wireframes, respond ONLY with the contents of the html file.`
-
-export async function makeReal(editor: Editor) {
+export async function makeReal(editor: Editor, showPollFormHandler: (value: any) => void) {
 	// we can't make anything real if there's nothing selected
 	const selectedShapes = editor.getSelectedShapes()
 	if (selectedShapes.length === 0) {
@@ -48,7 +26,7 @@ export async function makeReal(editor: Editor) {
 
 	// then, we create an empty response shape. we'll put the response from openai in here, but for
 	// now it'll just show a spinner so the user knows we're working on it.
-	const responseShapeId = makeEmptyResponseShape(editor)
+	// const responseShapeId = makeEmptyResponseShape(editor)
 
 	try {
 		// If you're using the API key input, we preference the key from there.
@@ -60,18 +38,28 @@ export async function makeReal(editor: Editor) {
 
 		// make a request to openai. `fetchFromOpenAi` is a next.js server action,
 		// so our api key is hidden.
-		const openAiResponse = await fetchFromOpenAi(apiKeyFromDangerousApiKeyInput, {
-			model: 'gpt-4-vision-preview',
-			max_tokens: 4096,
-			temperature: 0,
-			messages: prompt,
-		})
+		const openAiResponse: GPT4VCompletionResponse = await fetchFromOpenAi(
+			apiKeyFromDangerousApiKeyInput,
+			{
+				model: 'gpt-4-vision-preview',
+				max_tokens: 4096,
+				temperature: 0,
+				messages: prompt,
+			}
+		)
+		console.log(openAiResponse)
 
-		// populate the response shape with the html we got back from openai.
-		populateResponseShape(editor, responseShapeId, openAiResponse)
+		const messageContent = openAiResponse.choices[0].message.content
+		console.log(messageContent)
+
+		const parsedContent: { [key: string]: any } = JSON.parse(messageContent) // Removing the ```json```
+
+		// Accessing the parsed content
+		console.log(parsedContent)
+		showPollFormHandler(parsedContent)
 	} catch (e) {
 		// if something went wrong, get rid of the unnecessary response shape
-		editor.deleteShape(responseShapeId)
+		// editor.deleteShape(responseShapeId)
 		throw e
 	}
 }
@@ -119,43 +107,45 @@ async function buildPromptForOpenAi(editor: Editor): Promise<GPT4VMessage[]> {
 	]
 }
 
-function populateResponseShape(
-	editor: Editor,
-	responseShapeId: TLShapeId,
-	openAiResponse: GPT4VCompletionResponse
-) {
-	if (openAiResponse.error) {
-		throw new Error(openAiResponse.error.message)
-	}
+// function populateResponseShape(
+// 	editor: Editor,
+// 	responseShapeId: TLShapeId,
+// 	openAiResponse: GPT4VCompletionResponse
+// ) {
+// 	if (openAiResponse.error) {
+// 		throw new Error(openAiResponse.error.message)
+// 	}
 
-	// extract the html from the response
-	const message = openAiResponse.choices[0].message.content
-	const start = message.indexOf('<!DOCTYPE html>')
-	const end = message.indexOf('</html>')
-	const html = message.slice(start, end + '</html>'.length)
+// 	// extract the html from the response
+// 	const message = openAiResponse.choices[0].message.content
+// 	const start = message.indexOf('<!DOCTYPE html>')
+// 	const end = message.indexOf('</html>')
+// 	const html = message.slice(start, end + '</html>'.length)
 
-	// update the response shape we created earlier with the content
-	editor.updateShape<ResponseShape>({
-		id: responseShapeId,
-		type: 'response',
-		props: { html },
-	})
-}
+// 	// update the response shape we created earlier with the content
+// 	editor.updateShape<ResponseShape>({
+// 		id: responseShapeId,
+// 		type: 'response',
+// 		props: { html },
+// 	})
 
-function makeEmptyResponseShape(editor: Editor) {
-	const selectionBounds = editor.getSelectionPageBounds()
-	if (!selectionBounds) throw new Error('No selection bounds')
+// 	console.log(openAiResponse)
+// }
 
-	const newShapeId = createShapeId()
-	editor.createShape<ResponseShape>({
-		id: newShapeId,
-		type: 'response',
-		x: selectionBounds.maxX + 60,
-		y: selectionBounds.y,
-	})
+// function makeEmptyResponseShape(editor: Editor) {
+// 	const selectionBounds = editor.getSelectionPageBounds()
+// 	if (!selectionBounds) throw new Error('No selection bounds')
 
-	return newShapeId
-}
+// 	const newShapeId = createShapeId()
+// 	editor.createShape<ResponseShape>({
+// 		id: newShapeId,
+// 		type: 'response',
+// 		x: selectionBounds.maxX + 60,
+// 		y: selectionBounds.y,
+// 	})
+
+// 	return newShapeId
+// }
 
 function getContentOfPreviousResponse(editor: Editor) {
 	const previousResponses = editor
