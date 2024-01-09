@@ -43,6 +43,15 @@ export default function Home() {
 		setPollModalIsShown(false)
 	}
 
+	const ToastNotification = (pollNotificationData: any) => {
+		return (
+			<div>
+				A new Poll is available: {pollNotificationData.title}!
+				<button onClick={showPollModalHandler}> View Poll</button>
+			</div>
+		)
+	}
+
 	useEffect(() => {
 		window.onunload = () => {
 			if (isConnected) {
@@ -61,7 +70,7 @@ export default function Home() {
 					console.log('NOTIFICATION RECEIVED')
 					console.log(notification.data)
 					setPollNotificationData(notification.data)
-					toast(`A new Poll is available: ${notification.data.title}!`)
+					toast(<ToastNotification {...notification.data} />)
 				}
 				break
 			default:
@@ -72,7 +81,9 @@ export default function Home() {
 	return (
 		<div className={`App ${isConnected ? 'call' : 'preview'}`}>
 			{pollFormIsShown && <PollForm onClose={hidePollFormHandler} />}
-			{pollModalIsShown && <ViewPoll onClose={hidePollModalHandler} />}
+			{pollModalIsShown && (
+				<ViewPoll pollNotificationData={pollNotificationData} onClose={hidePollModalHandler} />
+			)}
 
 			{isConnected ? (
 				<>
