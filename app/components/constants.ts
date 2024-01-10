@@ -4,8 +4,3 @@ export enum HMSPollQuestionType {
 	SHORT_ANSWER = 'short-answer',
 	LONG_ANSWER = 'long-answer',
 }
-
-export type QuestionData = {
-	title: string
-	options: string[]
-}
