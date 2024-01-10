@@ -1,5 +1,6 @@
 'use client'
-import { Fragment, ReactNode, useEffect, useState } from 'react'
+import { CrossIcon } from '@100mslive/react-icons'
+import { Fragment, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 import classes from './Modal.module.css'
 
@@ -13,34 +14,43 @@ const Backdrop: React.FC<BackdropProps> = (props) => {
 
 type ModalOverlayProps = {
 	children: ReactNode
+	onClose: () => void
+	title?: string
 }
 
-const ModalOverlay: React.FC<ModalOverlayProps> = (props) => {
+const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, onClose, title = '' }) => {
 	return (
 		<div className={classes.modal}>
-			<div className={classes.content}>{props.children}</div>
+			<div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+				{title}
+				<div onClick={onClose} style={{ cursor: 'pointer' }}>
+					<CrossIcon />
+				</div>
+			</div>
+			<div className={classes.content}>{children}</div>
 		</div>
 	)
 }
 
 type ModalProps = {
+	title?: string
 	onClose: () => void
 	children: ReactNode
 }
 
-const Modal: React.FC<ModalProps> = (props) => {
-	const [isBrowser, setIsBrowser] = useState(false)
-
-	useEffect(() => {
-		setIsBrowser(true)
-	}, [])
-	const portalElement = isBrowser ? document.getElementById('overlays') : null
+const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
+	const portalElement = document?.getElementById('overlays')
 	if (!portalElement) return null
 
 	return (
 		<Fragment>
-			{ReactDOM.createPortal(<Backdrop onClose={props.onClose} />, portalElement)}
-			{ReactDOM.createPortal(<ModalOverlay>{props.children}</ModalOverlay>, portalElement)}
+			{ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}
+			{ReactDOM.createPortal(
+				<ModalOverlay onClose={onClose} title={title}>
+					{children}
+				</ModalOverlay>,
+				portalElement
+			)}
 		</Fragment>
 	)
 }

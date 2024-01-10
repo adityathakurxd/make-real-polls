@@ -192,11 +192,11 @@ input {
 	width: 100%;
 	border-radius: 8px;
 	border: 2px solid transparent;
-	height: 34px;
-	padding: 5px;
+	padding: 0.5rem;
 	background: #071014;
 	color: inherit;
 	font-family: inherit;
+	box-sizing: border-box;
 }
 
 input::placeholder {
@@ -336,4 +336,14 @@ input::placeholder {
 
 .separator {
 	font-size: 12px;
+}
+
+button {
+	padding: 0.5rem 0.75rem;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+button:hover {
+	opacity: 0.8;
 }
