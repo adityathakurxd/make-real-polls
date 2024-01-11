@@ -42,6 +42,7 @@ function Conference() {
 					}}
 				/>
 				<input
+				type="text"
 					value={name}
 					onChange={(e) => {
 						editor.user.updateUserPreferences({

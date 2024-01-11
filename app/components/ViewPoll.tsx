@@ -25,7 +25,7 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 				option: Number(selectedOptionIndex),
 			},
 		])
-		toast(`Vote done!`)
+		toast(`Vote registered!`)
 		onClose()
 	}
 

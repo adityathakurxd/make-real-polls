@@ -94,6 +94,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 	return (
 		<Modal title="Confirm problem set" onClose={onClose}>
 			<input
+				type="text"
 				value={localQuestionData.question}
 				onChange={(e) =>
 					setLocalQuestionData((prev) => {
@@ -106,6 +107,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 				<input
 					style={{ margin: '0.5rem 0' }}
 					key={index}
+					type="text"
 					value={option}
 					onChange={(e) =>
 						setLocalQuestionData((prev) => {

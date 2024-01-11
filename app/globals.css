@@ -188,7 +188,7 @@ form {
 	background-color: var(--surface_default);
 }
 
-input[type='text'] {
+input[type=text] {
 	display: block;
 	width: 100%;
 	border-radius: 8px;
