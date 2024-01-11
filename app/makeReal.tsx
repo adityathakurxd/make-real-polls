@@ -8,13 +8,14 @@ import {
 	fetchFromOpenAi,
 } from './lib/fetchFromOpenAi'
 
-// the system prompt explains to gpt-4 what we want it to do and how it should behave.
-const systemPrompt = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
+const SYSTEM_PROMPT = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
+	When sent new image as input, respond ONLY with the a json of question and array called options with 4 string values without any words like "json" or characters like "\`".`
 
-
-When sent new image as input, respond ONLY with the a json of Poll title and array called options with 4 string values without any words like "json" or characters like "\`".`
-
-export async function makeReal(editor: Editor, showPollFormHandler: (value: any) => void) {
+export async function makeReal(
+	editor: Editor,
+	showPollFormHandler: (value: any) => void,
+	customQuestion?: string
+) {
 	// we can't make anything real if there's nothing selected
 	const selectedShapes = editor.getSelectedShapes()
 	if (selectedShapes.length === 0) {
@@ -22,7 +23,7 @@ export async function makeReal(editor: Editor, showPollFormHandler: (value: any)
 	}
 
 	// first, we build the prompt that we'll send to openai.
-	const prompt = await buildPromptForOpenAi(editor)
+	const prompt = await buildPromptForOpenAi(editor, customQuestion)
 
 	// then, we create an empty response shape. we'll put the response from openai in here, but for
 	// now it'll just show a spinner so the user knows we're working on it.
@@ -47,15 +48,10 @@ export async function makeReal(editor: Editor, showPollFormHandler: (value: any)
 				messages: prompt,
 			}
 		)
-		console.log(openAiResponse)
 
 		const messageContent = openAiResponse.choices[0].message.content
-		console.log(messageContent)
-
 		const parsedContent: { [key: string]: any } = JSON.parse(messageContent) // Removing the ```json```
 
-		// Accessing the parsed content
-		console.log(parsedContent)
 		showPollFormHandler(parsedContent)
 	} catch (e) {
 		// if something went wrong, get rid of the unnecessary response shape
@@ -64,7 +60,10 @@ export async function makeReal(editor: Editor, showPollFormHandler: (value: any)
 	}
 }
 
-async function buildPromptForOpenAi(editor: Editor): Promise<GPT4VMessage[]> {
+async function buildPromptForOpenAi(
+	editor: Editor,
+	customQuestion?: string
+): Promise<GPT4VMessage[]> {
 	// if the user has selected a previous response from gpt-4, include that too. hopefully gpt-4 will
 	// modify it with any other feedback or annotations the user has left.
 	const previousResponseContent = getContentOfPreviousResponse(editor)
@@ -82,9 +81,7 @@ async function buildPromptForOpenAi(editor: Editor): Promise<GPT4VMessage[]> {
 		},
 		{
 			type: 'text',
-			text: previousResponseContent
-				? 'Here are the latest wireframes. Could you make a new website based on these wireframes and notes and send back just the html file?'
-				: 'Here are the latest wireframes including some notes on your previous work. Could you make a new website based on these wireframes and notes and send back just the html file?',
+			text: customQuestion || '',
 		},
 		{
 			// send the text of all selected shapes, so that GPT can use it as a reference (if anything is hard to see)
@@ -102,7 +99,10 @@ async function buildPromptForOpenAi(editor: Editor): Promise<GPT4VMessage[]> {
 
 	// combine the user prompt with the system prompt
 	return [
-		{ role: 'system', content: systemPrompt },
+		{
+			role: 'system',
+			content: SYSTEM_PROMPT,
+		},
 		{ role: 'user', content: userMessages },
 	]
 }

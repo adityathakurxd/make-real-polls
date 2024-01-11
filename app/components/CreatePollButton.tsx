@@ -1,20 +1,16 @@
 'use client'
 import { useEditor, useToasts } from '@tldraw/tldraw'
 import { useCallback, useState } from 'react'
+import { useQuestionContext } from '../context'
 import { makeReal } from '../makeReal'
-import PollForm from './StartPollForm'
+import PollForm from './PollForm'
 
 export function CreatePollButton() {
 	const editor = useEditor()
 	const { addToast } = useToasts()
 
 	const [pollFormIsShown, setPollFormIsShown] = useState(false)
-	const [apiData, setApiData] = useState(null)
-
-	const showPollFormHandler = (value: any) => {
-		setApiData(value) // Store the API data in a state
-		setPollFormIsShown(true)
-	}
+	const { questionData, setQuestionData } = useQuestionContext()
 
 	const hidePollFormHandler = () => {
 		setPollFormIsShown(false)
@@ -23,7 +19,10 @@ export function CreatePollButton() {
 	const handleClick = useCallback(async () => {
 		console.log('creating poll')
 		try {
-			await makeReal(editor, showPollFormHandler)
+			await makeReal(editor, (value) => {
+				setQuestionData(value)
+				setPollFormIsShown(true)
+			})
 		} catch (e) {
 			console.error(e)
 			addToast({
@@ -32,11 +31,11 @@ export function CreatePollButton() {
 				description: (e as Error).message.slice(0, 100),
 			})
 		}
-	}, [editor, addToast])
+	}, [editor, setQuestionData, addToast])
 
 	return (
 		<>
-			{pollFormIsShown && apiData && <PollForm onClose={hidePollFormHandler} apiData={apiData} />}
+			{pollFormIsShown && questionData && <PollForm onClose={hidePollFormHandler} />}
 			<button className="makeRealButton" onClick={handleClick}>
 				Create Poll
 			</button>

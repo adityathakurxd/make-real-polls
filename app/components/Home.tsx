@@ -1,56 +1,20 @@
 'use client'
 import JoinForm from './JoinForm'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
 	selectIsConnectedToRoom,
+	selectRoomState,
 	useHMSActions,
 	useHMSStore,
-	useHMSNotifications,
-	selectLocalPeerID,
-	HMSNotificationTypes,
-	HMSPoll,
+	HMSRoomState,
 } from '@100mslive/react-sdk'
-import Footer from './Footer'
-import Conference from './Conference'
-import ViewPoll from './ViewPoll'
-import PollForm from './StartPollForm'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
+import { RoomScreen } from './RoomScreen'
 
 export default function Home() {
 	const isConnected = useHMSStore(selectIsConnectedToRoom)
+	const roomState = useHMSStore(selectRoomState)
 	const hmsActions = useHMSActions()
-	const notification = useHMSNotifications()
-	const localPeerID = useHMSStore(selectLocalPeerID)
-
-	const [pollFormIsShown, setPollFormIsShownn] = useState(false)
-	const [pollModalIsShown, setPollModalIsShown] = useState(false)
-	const [pollNotificationData, setPollNotificationData] = useState<HMSPoll | undefined>()
-
-	const showPollFormHandler = () => {
-		setPollFormIsShownn(true)
-	}
-
-	const hidePollFormHandler = () => {
-		setPollFormIsShownn(false)
-	}
-
-	const showPollModalHandler = () => {
-		setPollModalIsShown(true)
-	}
-
-	const hidePollModalHandler = () => {
-		setPollModalIsShown(false)
-	}
-
-	const ToastNotification = (pollNotificationData: any) => {
-		return (
-			<div>
-				A new Poll is available: {pollNotificationData.title}!
-				<button onClick={showPollModalHandler}> View Poll</button>
-			</div>
-		)
-	}
 
 	useEffect(() => {
 		window.onunload = () => {
@@ -60,40 +24,16 @@ export default function Home() {
 		}
 	}, [hmsActions, isConnected])
 
-	useEffect(() => {
-		if (!notification) {
-			return
-		}
-		switch (notification.type) {
-			case HMSNotificationTypes.POLL_STARTED:
-				if (notification.data.startedBy !== localPeerID) {
-					console.log('NOTIFICATION RECEIVED')
-					console.log(notification.data)
-					setPollNotificationData(notification.data)
-					toast(<ToastNotification {...notification.data} />)
-				}
-				break
-			default:
-				break
-		}
-	}, [notification, localPeerID])
-
 	return (
 		<div className={`App ${isConnected ? 'call' : 'preview'}`}>
-			{pollFormIsShown && <PollForm onClose={hidePollFormHandler} />}
-			{pollModalIsShown && (
-				<ViewPoll pollNotificationData={pollNotificationData} onClose={hidePollModalHandler} />
-			)}
+			{roomState === HMSRoomState.Disconnected ? <JoinForm /> : null}
+			{roomState === HMSRoomState.Connected ? <RoomScreen /> : null}
 
-			{isConnected ? (
-				<>
-					<ToastContainer />
-					<Conference />
-					<Footer />
-				</>
-			) : (
-				<JoinForm />
-			)}
+			{[HMSRoomState.Connecting, HMSRoomState.Disconnecting, HMSRoomState.Reconnecting].includes(
+				roomState
+			)
+				? 'Connecting...'
+				: null}
 		</div>
 	)
 }
