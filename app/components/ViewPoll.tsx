@@ -32,21 +32,36 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 	return (
 		<Modal onClose={onClose} title={pollNotificationData.title}>
 			<div>
-				{pollNotificationData.questions[0].options.map((option, index) => (
-					<div
-						key={option.text}
-						style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0', gap: '0.25rem' }}
-					>
-						<input
-							style={{ cursor: 'pointer' }}
-							type="radio"
-							value={option.index}
-							checked={Number(selectedOptionIndex) === index + 1}
-							onChange={handleChange}
-						/>
-						{option.text}
-					</div>
-				))}
+				{pollNotificationData.questions[0].options.map(
+					(
+						option: {
+							text:
+								| boolean
+								| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+								| Iterable<React.ReactNode>
+								| React.PromiseLikeOfReactNode
+								| React.Key
+								| null
+								| undefined
+							index: string | number | readonly string[] | undefined
+						},
+						index: number
+					) => (
+						<div
+							key={index}
+							style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0', gap: '0.25rem' }}
+						>
+							<input
+								style={{ cursor: 'pointer' }}
+								type="radio"
+								value={option.index}
+								checked={Number(selectedOptionIndex) === index + 1}
+								onChange={handleChange}
+							/>
+							{String(option.text)}
+						</div>
+					)
+				)}
 
 				<button onClick={handleSubmit} style={{ marginTop: '0.75rem' }}>
 					Submit

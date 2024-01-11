@@ -1,5 +1,5 @@
 import { Editor, TLShapeId, createShapeId } from '@tldraw/tldraw'
-import { ResponseShape } from './ResponseShape/ResponseShape'
+
 import { getSelectionAsImageDataUrl } from './lib/getSelectionAsImageDataUrl'
 import {
 	GPT4VCompletionResponse,
@@ -49,10 +49,11 @@ export async function makeReal(
 			}
 		)
 
-		const messageContent = openAiResponse.choices[0].message.content
-		const parsedContent: { [key: string]: any } = JSON.parse(messageContent) // Removing the ```json```
-
-		showPollFormHandler(parsedContent)
+		if ('choices' in openAiResponse) {
+			const messageContent = openAiResponse.choices[0].message.content
+			const parsedContent: { [key: string]: any } = JSON.parse(messageContent) // Removing the ```json```
+			showPollFormHandler(parsedContent)
+		}
 	} catch (e) {
 		// if something went wrong, get rid of the unnecessary response shape
 		// editor.deleteShape(responseShapeId)
@@ -66,7 +67,6 @@ async function buildPromptForOpenAi(
 ): Promise<GPT4VMessage[]> {
 	// if the user has selected a previous response from gpt-4, include that too. hopefully gpt-4 will
 	// modify it with any other feedback or annotations the user has left.
-	const previousResponseContent = getContentOfPreviousResponse(editor)
 
 	// the user messages describe what the user has done and what they want to do next. they'll get
 	// combined with the system prompt to tell gpt-4 what we'd like it to do.
@@ -89,13 +89,6 @@ async function buildPromptForOpenAi(
 			text: getSelectionAsText(editor),
 		},
 	]
-
-	if (previousResponseContent) {
-		userMessages.push({
-			type: 'text',
-			text: previousResponseContent,
-		})
-	}
 
 	// combine the user prompt with the system prompt
 	return [
@@ -146,22 +139,6 @@ async function buildPromptForOpenAi(
 
 // 	return newShapeId
 // }
-
-function getContentOfPreviousResponse(editor: Editor) {
-	const previousResponses = editor
-		.getSelectedShapes()
-		.filter((shape): shape is ResponseShape => shape.type === 'response')
-
-	if (previousResponses.length === 0) {
-		return null
-	}
-
-	if (previousResponses.length > 1) {
-		throw new Error('You can only have one previous response selected')
-	}
-
-	return previousResponses[0].props.html
-}
 
 function getSelectionAsText(editor: Editor) {
 	const selectedShapeIds = editor.getSelectedShapeIds()
