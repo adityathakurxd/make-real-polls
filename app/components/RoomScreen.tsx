@@ -14,7 +14,6 @@ import PollForm from './PollForm'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { QuestionContext } from '../context'
-// import { QuestionData } from './constants'
 
 export const RoomScreen = () => {
 	const localPeerID = useHMSStore(selectLocalPeerID)
@@ -23,13 +22,12 @@ export const RoomScreen = () => {
 
 	const [showPollForm, setShowPollForm] = useState(false)
 	const [showPollModal, setShowPollModal] = useState(false)
+	const [questionData, setQuestionData] = useState<any>(undefined)
 
-	const [questionData, setQuestionData] = useState<undefined>(undefined)
-
-	const ToastNotification = (pollNotificationData: any) => {
+	const ToastNotification = () => {
 		return (
 			<div>
-				A new Poll is available: {pollNotificationData.title}!
+				A new Poll is available!
 				<button onClick={() => setShowPollModal(true)}> View Poll</button>
 			</div>
 		)
@@ -44,7 +42,7 @@ export const RoomScreen = () => {
 			console.log('NOTIFICATION RECEIVED')
 			console.log(notification.data)
 			setPollNotificationData(notification.data)
-			toast(<ToastNotification {...notification.data} />)
+			toast(<ToastNotification />)
 		}
 	}, [notification, localPeerID])
 
