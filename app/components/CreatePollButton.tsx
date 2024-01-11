@@ -10,6 +10,7 @@ export function CreatePollButton() {
 	const { addToast } = useToasts()
 
 	const [pollFormIsShown, setPollFormIsShown] = useState(false)
+	const [fetchingQuestion, setFetchingQuestion] = useState(false)
 	const { questionData, setQuestionData } = useQuestionContext()
 
 	const hidePollFormHandler = () => {
@@ -17,7 +18,11 @@ export function CreatePollButton() {
 	}
 
 	const handleClick = useCallback(async () => {
+		if (fetchingQuestion) {
+			return
+		}
 		console.log('creating poll')
+		setFetchingQuestion(true)
 		try {
 			await makeReal(editor, (value) => {
 				setQuestionData(value)
@@ -31,13 +36,14 @@ export function CreatePollButton() {
 				description: (e as Error).message.slice(0, 100),
 			})
 		}
-	}, [editor, setQuestionData, addToast])
+		setFetchingQuestion(false)
+	}, [editor, setQuestionData, addToast, fetchingQuestion])
 
 	return (
 		<>
 			{pollFormIsShown && questionData && <PollForm onClose={hidePollFormHandler} />}
-			<button className="makeRealButton" onClick={handleClick}>
-				Create Poll
+			<button className="makeRealButton" onClick={handleClick} disabled={fetchingQuestion}>
+				{fetchingQuestion ? 'Loading...' : 'Create Poll'}
 			</button>
 		</>
 	)

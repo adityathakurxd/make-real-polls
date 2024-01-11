@@ -2,15 +2,13 @@ import React, { useState } from 'react'
 import Modal from './Modal'
 import { useHMSActions } from '@100mslive/react-sdk'
 import { toast } from 'react-toastify'
-import { Button } from '@tldraw/tldraw'
 
 interface ViewPollProps {
 	pollNotificationData: any
-	// pollNotificationData: HMSPollNotificationData
 	onClose: () => void
 }
 
-const ViewPoll: React.FC<ViewPollProps> = (props) => {
+const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) => {
 	const actions = useHMSActions()
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | undefined>()
 
@@ -21,50 +19,39 @@ const ViewPoll: React.FC<ViewPollProps> = (props) => {
 	const handleSubmit = async (event: any) => {
 		event.preventDefault()
 
-		await actions.interactivityCenter.addResponsesToPoll(props.pollNotificationData.id, [
+		await actions.interactivityCenter.addResponsesToPoll(pollNotificationData.id, [
 			{
-				questionIndex: props.pollNotificationData.questions[0].index,
+				questionIndex: pollNotificationData.questions[0].index,
 				option: Number(selectedOptionIndex),
 			},
 		])
-
 		toast(`Vote done!`)
+		onClose()
 	}
 
 	return (
-		<Modal onClose={props.onClose}>
-			<h1>Poll: {props.pollNotificationData.title}</h1>
-
-			<h3>{props.pollNotificationData.questions[0].text}</h3>
-
-			<form onSubmit={handleSubmit}>
-				<div className="radio">
-					<label>
+		<Modal onClose={onClose} title={pollNotificationData.title}>
+			<div>
+				{pollNotificationData.questions[0].options.map((option, index) => (
+					<div
+						key={option.text}
+						style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0', gap: '0.25rem' }}
+					>
 						<input
+							style={{ cursor: 'pointer' }}
 							type="radio"
-							value={props.pollNotificationData.questions[0].options[0].index}
-							checked={Number(selectedOptionIndex) === 1}
+							value={option.index}
+							checked={Number(selectedOptionIndex) === index + 1}
 							onChange={handleChange}
 						/>
-						{props.pollNotificationData.questions[0].options[0].text}
-					</label>
-				</div>
+						{option.text}
+					</div>
+				))}
 
-				<div className="radio">
-					<label>
-						<input
-							type="radio"
-							value={props.pollNotificationData.questions[0].options[1].index}
-							checked={Number(selectedOptionIndex) === 2}
-							onChange={handleChange}
-						/>
-						{props.pollNotificationData.questions[0].options[1].text}
-					</label>
-				</div>
-
-				<br />
-				<button type="submit">Submit</button>
-			</form>
+				<button onClick={handleSubmit} style={{ marginTop: '0.75rem' }}>
+					Submit
+				</button>
+			</div>
 		</Modal>
 	)
 }
