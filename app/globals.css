@@ -24,7 +24,7 @@
 }
 
 body {
-	margin: 0 !important;	
+	margin: 0 !important;
 }
 
 .App {
@@ -80,6 +80,7 @@ body {
 	cursor: pointer;
 	pointer-events: all;
 }
+
 .makeRealButton:hover {
 	opacity: 0.95;
 }
@@ -187,7 +188,7 @@ form {
 	background-color: var(--surface_default);
 }
 
-input {
+input[type='text'] {
 	display: block;
 	width: 100%;
 	border-radius: 8px;
@@ -346,4 +347,10 @@ button {
 
 button:hover {
 	opacity: 0.8;
+}
+
+button:disabled {
+	opacity: 1;
+	cursor: not-allowed;	
+	background-color: grey;
 }

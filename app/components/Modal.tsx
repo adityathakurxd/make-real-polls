@@ -22,7 +22,7 @@ const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, onClose, title = 
 	return (
 		<div className={classes.modal}>
 			<div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-				{title}
+				<p style={{ fontWeight: '600', fontSize: '1.25rem', margin: 0 }}>{title}</p>
 				<div onClick={onClose} style={{ cursor: 'pointer' }}>
 					<CrossIcon />
 				</div>
