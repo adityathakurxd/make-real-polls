@@ -14,7 +14,7 @@ import PollForm from './PollForm'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { QuestionContext } from '../context'
-import { QuestionData } from './constants'
+// import { QuestionData } from './constants'
 
 export const RoomScreen = () => {
 	const localPeerID = useHMSStore(selectLocalPeerID)
@@ -23,7 +23,8 @@ export const RoomScreen = () => {
 
 	const [showPollForm, setShowPollForm] = useState(false)
 	const [showPollModal, setShowPollModal] = useState(false)
-	const [questionData, setQuestionData] = useState<QuestionData | undefined>(undefined)
+
+	const [questionData, setQuestionData] = useState<undefined>(undefined)
 
 	const ToastNotification = (pollNotificationData: any) => {
 		return (

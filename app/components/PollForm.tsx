@@ -96,7 +96,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 			<input
 				value={localQuestionData.question}
 				onChange={(e) =>
-					setLocalQuestionData((prev) => {
+					setLocalQuestionData((prev: any) => {
 						return { ...prev, question: e.target.value }
 					})
 				}
@@ -108,7 +108,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 					key={index}
 					value={option}
 					onChange={(e) =>
-						setLocalQuestionData((prev) => {
+						setLocalQuestionData((prev: { options: any }) => {
 							const optionsCopy = prev.options
 							optionsCopy[index] = e.target.value
 							return { ...prev, options: optionsCopy }
