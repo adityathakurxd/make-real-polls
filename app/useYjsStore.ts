@@ -22,7 +22,7 @@ import { DEFAULT_STORE } from './default_store'
 
 export function useYjsStore({
 	roomId = 'example',
-	hostUrl = 'ws://localhost:8000',
+	hostUrl = "wss://demo-yjs-server-production.up.railway.app",
 	shapeUtils = [],
 }: Partial<{
 	hostUrl: string

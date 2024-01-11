@@ -9,7 +9,7 @@ import './styles.css'
 import { Tldraw, track, useEditor } from '@tldraw/tldraw'
 import { useYjsStore } from '../useYjsStore'
 
-const HOST_URL = 'ws://localhost:8000'
+const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 // const Tldraw = dynamic(async () => (await import('@tldraw/tldraw')).Tldraw, {
 // 	ssr: false,
