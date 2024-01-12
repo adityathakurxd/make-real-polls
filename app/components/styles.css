@@ -4,16 +4,12 @@
 	height: 100vh; /* Adjust height as needed */
 }
 
-.conference-title {
-	color: #000;
-}
-
 /* Side pane for conference section */
 .conference-section {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 300px; /* Adjust width as needed */
+	width: 400px; /* Adjust width as needed */
 	height: 100%;
 	z-index: 2; /* Higher z-index to be on top */
 	background-color: var(--surface_default); /* Light background for visibility */

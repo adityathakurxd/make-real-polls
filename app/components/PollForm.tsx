@@ -20,7 +20,6 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 
 	useEffect(() => {
 		setLocalQuestionData(questionData)
-		console.log('ollo updated to', questionData)
 	}, [questionData])
 
 	const regenerateQuestion = useCallback(
@@ -55,7 +54,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 				rolesThatCanViewResponses: ['host'],
 			})
 			.catch((err: Error) => console.log(err.message))
-		console.log('POLL Created')
+
 		await hmsActions.interactivityCenter
 			.addQuestionsToPoll(id, [
 				{
@@ -84,7 +83,6 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 			])
 			.catch((err: Error) => console.log(err.message))
 
-		console.log('Adding options')
 		await hmsActions.interactivityCenter
 			.startPoll(id)
 			.catch((err: Error) => console.log(err.message))

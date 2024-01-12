@@ -15,7 +15,7 @@
 	box-sizing: border-box;
 	
 	--surface_dark: #000;
-	--surface_default: #163f86;
+	--surface_default: #E0ECFC;
 	--surface_bright: #7FC7D9;
 	--on_surface: #F2F1EB;
 	--white: #FFF;
@@ -242,13 +242,6 @@ input::placeholder {
 	overflow-y: auto;
 }
 
-.conference-section h2 {
-	text-align: center;
-	font-size: 32px;
-	margin-top: 0;
-	color: var(--on_surface);
-}
-
 .tile {
 	height: 180px;
 	width: 100%;
@@ -284,7 +277,7 @@ input::placeholder {
 	bottom: -8px;
 	left: 0;
 	width: 100%;
-	color: white;
+	color: black;
 	font-weight: 500;
 }
 
@@ -304,7 +297,7 @@ input::placeholder {
 	padding: 15px 0;
 	justify-content: center;
 	z-index: 10;
-	width: 300px;
+	width: 400px;
 }
 
 .control-bar > *:not(:first-child) {
