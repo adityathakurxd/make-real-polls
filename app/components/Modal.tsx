@@ -21,9 +21,16 @@ type ModalOverlayProps = {
 const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, onClose, title = '' }) => {
 	return (
 		<div className={classes.modal}>
-			<div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-				<p style={{ fontWeight: '600', fontSize: '1.25rem', margin: 0 }}>{title}</p>
-				<div onClick={onClose} style={{ cursor: 'pointer' }}>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					width: '100%',
+					marginBottom: '0.5rem',
+				}}
+			>
+				<p style={{ fontWeight: '600', fontSize: '1.25rem', margin: 0, color: 'black' }}>{title}</p>
+				<div onClick={onClose} style={{ cursor: 'pointer', color: 'black' }}>
 					<CrossIcon />
 				</div>
 			</div>

@@ -9,6 +9,8 @@ import { useYjsStore } from '../useYjsStore'
 import { useState } from 'react'
 import { ChevronRightIcon } from '@/node_modules/@100mslive/react-icons/dist/index'
 import { Pagination } from './Pagination'
+import { LiveResults } from './LiveResults'
+import Footer from './Footer'
 
 const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
@@ -40,10 +42,11 @@ function Conference() {
 						/>
 					) : null}
 				</div>
+				<LiveResults />
+				<Footer />
 			</div>
 			<div className="editor">
-				<Tldraw autoFocus store={store}>
-					<CreatePollButton />
+				<Tldraw autoFocus store={store} shareZone={<CreatePollButton />}>
 					<TldrawLogo />
 				</Tldraw>
 			</div>

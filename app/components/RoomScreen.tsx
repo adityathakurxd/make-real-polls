@@ -14,7 +14,6 @@ import PollForm from './PollForm'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { QuestionContext } from '../context'
-import { LiveResults } from './LiveResults'
 
 export const RoomScreen = () => {
 	const localPeerID = useHMSStore(selectLocalPeerID)
@@ -29,7 +28,10 @@ export const RoomScreen = () => {
 		return (
 			<div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
 				<p>A new poll is available!</p>
-				<button onClick={() => setShowPollModal(true)}> View Poll</button>
+				<button className="primary" onClick={() => setShowPollModal(true)}>
+					{' '}
+					View Poll
+				</button>
 			</div>
 		)
 	}
@@ -50,8 +52,7 @@ export const RoomScreen = () => {
 		<QuestionContext.Provider value={{ questionData, setQuestionData }}>
 			<ToastContainer />
 			<Conference />
-			<Footer />
-			<LiveResults />
+
 			{showPollForm && (
 				<PollForm
 					onClose={() => {
@@ -59,6 +60,7 @@ export const RoomScreen = () => {
 					}}
 				/>
 			)}
+
 			{showPollModal && (
 				<ViewPoll
 					pollNotificationData={pollNotificationData}

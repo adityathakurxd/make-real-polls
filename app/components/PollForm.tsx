@@ -90,7 +90,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 	}
 
 	return (
-		<Modal title="Confirm problem set" onClose={onClose}>
+		<Modal title="Confirm poll" onClose={onClose}>
 			<input
 				type="text"
 				value={localQuestionData.question}
@@ -123,10 +123,18 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 					display: 'flex',
 					justifyContent: 'space-between',
 					alignItems: 'center',
+					marginTop: '1rem',
 				}}
 			>
-				<button onClick={() => regenerateQuestion(localQuestionData.question)}>Regenerate</button>
-				<button onClick={createPollOnClick}>Start Poll</button>
+				<button
+					className="secondary"
+					onClick={() => regenerateQuestion(localQuestionData.question)}
+				>
+					Regenerate
+				</button>
+				<button className="primary" onClick={createPollOnClick}>
+					Launch Poll
+				</button>
 			</div>
 		</Modal>
 	)

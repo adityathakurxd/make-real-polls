@@ -39,7 +39,7 @@ const JoinForm = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<h2>Join Room</h2>
+			<h2 style={{ color: 'black' }}>Join Room</h2>
 			<div className="input-container">
 				<input
 					required
@@ -62,7 +62,7 @@ const JoinForm = () => {
 					placeholder="Room Code"
 				/>
 			</div>
-			<button className="btn-primary">Join</button>
+			<button className="btn-primary primary">Join</button>
 		</form>
 	)
 }

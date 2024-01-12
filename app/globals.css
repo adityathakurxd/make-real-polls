@@ -16,9 +16,10 @@
 	
 	--surface_dark: #000;
 	--surface_default: #E0ECFC;
-	--surface_bright: #7FC7D9;
+	--surface_bright: #F6F7F9;
 	--on_surface: #F2F1EB;
 	--white: #FFF;
+	--error_default: #C74E5B;
 
 	background-color: var(--surface_dark);
 }
@@ -53,7 +54,7 @@ body {
 .editor {
 	position: fixed;
 	inset: 0;
-	overflow: hidden;
+	overflow: visible;
 	background-color: var(--white);
 }
 
@@ -79,6 +80,10 @@ body {
 	margin: var(--space-3);
 	cursor: pointer;
 	pointer-events: all;
+	position: fixed;
+	bottom: 18px;
+	left: 395px;
+	z-index: 10000;
 }
 
 .makeRealButton:hover {
@@ -191,12 +196,11 @@ form {
 input[type=text] {
 	display: block;
 	width: 100%;
-	border-radius: 8px;
-	border: 2px solid transparent;
-	padding: 0.5rem;
-	background: #071014;
-	color: inherit;
-	font-family: inherit;
+	border-radius: 4px;
+	border: 1px solid #ABACB5;
+	padding: 10px 12px;
+	background: var(--surface_bright);
+	color: black;
 	box-sizing: border-box;
 }
 
@@ -234,7 +238,8 @@ input::placeholder {
 }
 
 .conference-section {
-	padding: 20px 30px;
+	padding: 20px;
+	padding-bottom: 0px;
 	max-width: 960px;
 	margin: 0 auto;
 	max-height: 100vh;
@@ -291,37 +296,14 @@ input::placeholder {
 
 .control-bar {
 	display: flex;
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	padding: 15px 0;
-	justify-content: center;
-	z-index: 10;
+	padding: 12px 10px;
+	justify-content: space-between;
 	width: 400px;
-}
-
-.control-bar > *:not(:first-child) {
-	margin-left: 8px;
-}
-
-.btn-control {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	background-color: var(--surface_bright);
-	color: black;
-	cursor: pointer;
-	outline: none;
-	border: 1px solid black;
+	box-sizing: border-box;
 }
 
 .btn-control:hover{
 	opacity: 0.8;
-}
-
-.btn-control.off {
-	color: white;
-	background-color: red;
 }
 
 .hide {
@@ -336,6 +318,10 @@ button {
 	padding: 0.5rem 0.75rem;
 	cursor: pointer;
 	font-weight: 600;
+	font-size: 14px;
+	outline: none;
+	border: none;
+	border-radius: 0.25rem;
 }
 
 button:hover {
@@ -346,4 +332,32 @@ button:disabled {
 	opacity: 1;
 	cursor: not-allowed;	
 	background-color: grey;
+}
+
+.btn-control {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--surface_bright);
+	color: black;
+	cursor: pointer;
+	outline: none;
+	border: 1px solid black;
+	border-radius: 0.5rem;
+}
+
+.primary {
+	background: #2672ED;
+	color: white;
+	border: none;
+
+}
+
+.secondary {
+	background: white;
+	color: black;
+	border: 1px solid black;
 }
