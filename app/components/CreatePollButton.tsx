@@ -1,4 +1,6 @@
 'use client'
+import { RefreshIcon } from '@/node_modules/@100mslive/react-icons/dist/index'
+import { SparkleIcon } from '@100mslive/react-icons'
 import { useEditor, useToasts } from '@tldraw/tldraw'
 import { useCallback, useState } from 'react'
 import { useQuestionContext } from '../context'
@@ -42,8 +44,22 @@ export function CreatePollButton() {
 	return (
 		<>
 			{pollFormIsShown && questionData && <PollForm onClose={hidePollFormHandler} />}
-			<button className="makeRealButton" onClick={handleClick} disabled={fetchingQuestion}>
-				{fetchingQuestion ? 'Loading...' : 'Create Poll'}
+			<button
+				title="Create poll"
+				className="makeRealButton btn-control primary"
+				onClick={handleClick}
+				disabled={fetchingQuestion}
+			>
+				{fetchingQuestion ? (
+					<RefreshIcon
+						style={{
+							transform: 'rotate(180deg)',
+							transition: 'transform 2s linear',
+						}}
+					/>
+				) : (
+					<SparkleIcon />
+				)}
 			</button>
 		</>
 	)

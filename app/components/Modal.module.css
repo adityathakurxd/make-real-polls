@@ -12,8 +12,8 @@
 	position: fixed;
 	top: 20vh;
 	left: 5%;
-	width: 90%;
-	background-color: #546e7a;
+	width: 40%;
+	background-color: var(--surface_default);
 	padding: 2rem 3rem;
 	border-radius: 14px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -23,7 +23,7 @@
 
 @media (min-width: 768px) {
 	.modal {
-		width: 40rem;
+		width: 30rem;
 		left: calc(50% - 20rem);
 	}
 }

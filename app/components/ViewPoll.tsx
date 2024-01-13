@@ -35,21 +35,14 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 				{pollNotificationData.questions[0].options.map(
 					(
 						option: {
-							text:
-								| boolean
-								| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-								| Iterable<React.ReactNode>
-								| React.PromiseLikeOfReactNode
-								| React.Key
-								| null
-								| undefined
+							text: any
 							index: string | number | readonly string[] | undefined
 						},
 						index: number
 					) => (
 						<div
 							key={index}
-							style={{ display: 'flex', alignItems: 'center', margin: '0.5rem 0', gap: '0.25rem' }}
+							style={{ display: 'flex', alignItems: 'center', margin: '0.25rem 0', gap: '0.25rem' }}
 						>
 							<input
 								style={{ cursor: 'pointer' }}
@@ -58,12 +51,12 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 								checked={Number(selectedOptionIndex) === index + 1}
 								onChange={handleChange}
 							/>
-							{String(option.text)}
+							<p style={{ color: 'black', fontWeight: '500' }}>{option.text}</p>
 						</div>
 					)
 				)}
 
-				<button onClick={handleSubmit} style={{ marginTop: '0.75rem' }}>
+				<button className="primary" onClick={handleSubmit} style={{ marginTop: '0.75rem' }}>
 					Submit
 				</button>
 			</div>
