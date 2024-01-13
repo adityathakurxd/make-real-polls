@@ -45,6 +45,7 @@ export function CreatePollButton() {
 		<>
 			{pollFormIsShown && questionData && <PollForm onClose={hidePollFormHandler} />}
 			<button
+				title="Create poll"
 				className="makeRealButton btn-control primary"
 				onClick={handleClick}
 				disabled={fetchingQuestion}
