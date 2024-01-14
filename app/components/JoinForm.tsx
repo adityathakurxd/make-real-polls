@@ -1,5 +1,6 @@
 'use client'
 import { useHMSActions } from '@100mslive/react-sdk'
+import Image from 'next/image'
 import { useState, ChangeEvent, FormEvent } from 'react'
 
 // Define a type for your state
@@ -38,32 +39,43 @@ const JoinForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<h2 style={{ color: 'black' }}>Join Room</h2>
-			<div className="input-container">
-				<input
-					required
-					id="name"
-					type="text"
-					name="name"
-					value={inputValues.name}
-					onChange={handleInputChange}
-					placeholder="Your Name"
-				/>
+		<>
+			<div className="input-panel">
+				<h2>100ms</h2>
+				<h2>Generate Polls with</h2>
+				<h2>AI in seconds</h2>
+				<p>Write, draw or add an image on the whiteboard,</p>
+				<p>click on create poll. That's it.</p>
+				<form onSubmit={handleSubmit}>
+					<div className="input-container">
+						<input
+							required
+							id="name"
+							type="text"
+							name="name"
+							value={inputValues.name}
+							onChange={handleInputChange}
+							placeholder="Your Name"
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							required
+							id="room-code"
+							type="text"
+							name="roomCode"
+							value={inputValues.roomCode}
+							onChange={handleInputChange}
+							placeholder="Room Code"
+						/>
+					</div>
+					<button className="btn-primary primary">Join</button>
+				</form>
 			</div>
-			<div className="input-container">
-				<input
-					required
-					id="room-code"
-					type="text"
-					name="roomCode"
-					value={inputValues.roomCode}
-					onChange={handleInputChange}
-					placeholder="Room Code"
-				/>
+			<div className="input-graphic">
+				<Image alt="" src="/images/pollsAI.png" width={500} height={500} />
 			</div>
-			<button className="btn-primary primary">Join</button>
-		</form>
+		</>
 	)
 }
 

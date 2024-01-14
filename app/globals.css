@@ -5,7 +5,7 @@
 
 	color-scheme: light dark;
 	color: rgba(255, 255, 255, 0.87);
-	
+
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -13,13 +13,13 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	
+
 	--surface_dark: #000;
-	--surface_default: #E0ECFC;
-	--surface_bright: #F6F7F9;
-	--on_surface: #F2F1EB;
-	--white: #FFF;
-	--error_default: #C74E5B;
+	--surface_default: #e0ecfc;
+	--surface_bright: #f6f7f9;
+	--on_surface: #f2f1eb;
+	--white: #fff;
+	--error_default: #c74e5b;
 
 	background-color: var(--surface_dark);
 }
@@ -30,10 +30,11 @@ body {
 
 .App {
 	height: 100vh;
-	width: 100%;	
+	width: 100%;
 }
 
 .preview {
+	background-color: #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -183,21 +184,38 @@ body {
 	cursor: pointer;
 }
 
+.input-panel {
+	color: black;
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	background-color: #f5f8fd;
+}
+
+.input-graphic {
+	display: flex;
+	width: 60%;
+	height: 100vh;
+	align-items: center;
+	justify-content: center;
+}
+
 form {
 	width: 100%;
 	max-width: 450px;
 	margin: 30px auto;
-	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 	border-radius: 8px;
 	padding: 20px;
-	background-color: var(--surface_default);
 }
 
-input[type=text] {
+input[type='text'] {
 	display: block;
 	width: 100%;
 	border-radius: 4px;
-	border: 1px solid #ABACB5;
+	border: 1px solid #abacb5;
 	padding: 10px 12px;
 	background: var(--surface_bright);
 	color: black;
@@ -269,7 +287,6 @@ input::placeholder {
 	z-index: -1;
 }
 
-
 .local video.tile {
 	transform: scaleX(-1);
 }
@@ -286,7 +303,6 @@ input::placeholder {
 	font-weight: 500;
 }
 
-
 .peer-container {
 	padding: 8px;
 	position: relative;
@@ -302,7 +318,7 @@ input::placeholder {
 	box-sizing: border-box;
 }
 
-.btn-control:hover{
+.btn-control:hover {
 	opacity: 0.8;
 }
 
@@ -330,7 +346,7 @@ button:hover {
 
 button:disabled {
 	opacity: 1;
-	cursor: not-allowed;	
+	cursor: not-allowed;
 	background-color: grey;
 }
 
@@ -350,10 +366,9 @@ button:disabled {
 }
 
 .primary {
-	background: #2672ED;
+	background: #2672ed;
 	color: white;
 	border: none;
-
 }
 
 .secondary {
