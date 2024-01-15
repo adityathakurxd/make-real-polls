@@ -292,6 +292,42 @@ input::placeholder {
 	align-items: start;
 }
 
+.tabs-container {
+	display: flex;
+	justify-content: space-around;
+	flex-flow: row wrap;
+	align-items: center;
+	width: 100%;
+}
+.tab-item {
+	flex-grow: 1;
+	align-items: center;
+	border-radius: 0px;
+}
+.active-tab {
+	border-radius: 0px;
+	align-items: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: white;
+	width: 100%;
+	color: rgba(0, 0, 0, 0.95);
+	border: #b8c4d5 0.5px solid;
+}
+.disabled-tab {
+	border-radius: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	opacity: 0.5;
+	width: 100%;
+	background-color: #dbe2eb;
+	color: rgba(0, 0, 0, 0.4);
+}
+
 .btn-primary {
 	border: 1px solid transparent;
 	border-radius: 4px;

@@ -2,7 +2,7 @@
 import { ArrowRightIcon, Svg100MsLogoIcon } from '@100mslive/react-icons'
 import { useHMSActions } from '@100mslive/react-sdk'
 import Image from 'next/image'
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -14,7 +14,13 @@ type InputValues = {
 }
 
 const JoinForm = () => {
+	const [activeTabRole, setActiveTabRole] = useState('teacher')
 	const hmsActions = useHMSActions()
+
+	const handleTabClick = (tab) => {
+		setActiveTabRole(tab)
+	}
+
 	const [inputValues, setInputValues] = useState<InputValues>({
 		name: '',
 		roomCode: '',
@@ -74,15 +80,25 @@ const JoinForm = () => {
 					</div>
 					<div className="input-container">
 						<div className="input-label">Join as</div>
-						<input
-							required
-							id="room-code"
-							type="text"
-							name="roomCode"
-							value={inputValues.roomCode}
-							onChange={handleInputChange}
-							placeholder="Room Code"
-						/>
+
+						<div className="tabs-container">
+							<div className="tab-item">
+								<button
+									onClick={() => handleTabClick('teacher')}
+									className={activeTabRole === 'teacher' ? 'active-tab' : 'disabled-tab'}
+								>
+									Teacher
+								</button>
+							</div>
+							<div className="tab-item">
+								<button
+									onClick={() => handleTabClick('student')}
+									className={activeTabRole === 'student' ? 'active-tab' : 'disabled-tab'}
+								>
+									Student
+								</button>
+							</div>
+						</div>
 					</div>
 					<button className="btn-primary primary">
 						Join Room{' '}
