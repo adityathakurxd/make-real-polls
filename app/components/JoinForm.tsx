@@ -41,7 +41,13 @@ const JoinForm = () => {
 		const { name: userName = '', roomCode = '' } = inputValues
 
 		try {
-			const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+			var authToken = ''
+			if (activeTabRole === 'teacher') {
+				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: 'afu-oanp-nlh' })
+			} else {
+				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: 'dsv-tdwb-mqk' })
+			}
+
 			await hmsActions.join({ userName, authToken })
 		} catch (e) {
 			console.error(e)
@@ -78,12 +84,14 @@ const JoinForm = () => {
 							placeholder="Name"
 						/>
 					</div>
+
 					<div className="input-container">
 						<div className="input-label">Join as</div>
 
 						<div className="tabs-container">
 							<div className="tab-item">
 								<button
+									type="button"
 									onClick={() => handleTabClick('teacher')}
 									className={activeTabRole === 'teacher' ? 'active-tab' : 'disabled-tab'}
 								>
@@ -92,6 +100,7 @@ const JoinForm = () => {
 							</div>
 							<div className="tab-item">
 								<button
+									type="button"
 									onClick={() => handleTabClick('student')}
 									className={activeTabRole === 'student' ? 'active-tab' : 'disabled-tab'}
 								>
@@ -100,17 +109,20 @@ const JoinForm = () => {
 							</div>
 						</div>
 					</div>
-					<button className="btn-primary primary">
-						Join Room{' '}
+
+					<button type="submit" className="btn-primary primary">
+						Join Room
 						<ArrowRightIcon style={{ height: '15px', width: '15px', paddingLeft: '5px' }} />
 					</button>
 				</form>
+
 				<div className="bottom-banner">
 					<div className="bottom-room-info">PUBLIC ROOM</div>
 					<div className="bottom-notif body-regular-text ">There might be others in the room</div>
 				</div>
 			</div>
-			<div className="input-graphic">
+
+			<div className="input-graphic" style={{ zIndex: '10' }}>
 				<Image alt="" src="/images/pollsAI.png" width={500} height={500} />
 			</div>
 		</>
