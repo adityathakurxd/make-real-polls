@@ -58,7 +58,9 @@ export function CreatePollButton() {
 						}}
 					/>
 				) : (
-					<SparkleIcon />
+					<>
+						<p className="create-poll-text">Create Poll</p> <SparkleIcon />
+					</>
 				)}
 			</button>
 		</>

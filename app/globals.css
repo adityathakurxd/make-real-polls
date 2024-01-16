@@ -91,13 +91,19 @@ h4 {
 	cursor: pointer;
 	pointer-events: all;
 	position: fixed;
-	bottom: 18px;
-	left: 395px;
+	top: 18px;
+	left: 420px;
 	z-index: 10000;
 }
 
 .makeRealButton:hover {
 	opacity: 0.95;
+}
+
+.create-poll-text {
+	margin-right: 5px;
+	font-size: 12px;
+	font-weight: 600;
 }
 
 /* ------------------ Api Key Input ----------------- */
@@ -457,7 +463,7 @@ button:disabled {
 	cursor: pointer;
 	outline: none;
 	border: 1px solid black;
-	border-radius: 0.5rem;
+	border-radius: 0.2rem;
 }
 
 .primary {
