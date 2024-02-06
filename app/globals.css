@@ -4,7 +4,6 @@
 	font-weight: 400;
 
 	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -21,7 +20,7 @@
 	--white: #fff;
 	--error_default: #c74e5b;
 
-	background-color: var(--surface_dark);
+	background-color: #ffffffde;
 }
 
 body {
@@ -246,6 +245,32 @@ h4 {
 
 .bottom-notif {
 	color: rgba(0, 0, 0, 0.8);
+}
+
+.responsive-banner {
+	display: none;
+	margin: 10px;
+	padding: 5px;
+	align-items: center;
+	gap: 8px;
+	border-radius: var(--Radius-1, 8px);
+	border: 1px solid var(--Border-Light, #b8c4d5);
+	border: 1px solid var(--Border-Light, color(display-p3 0.7373 0.7686 0.8235));
+}
+.responsive-banner-info {
+	font-size: 10px;
+	display: flex;
+	padding: 4px 8px;
+	text-align: center;
+	border-radius: 4px;
+	background: var(--Primary-Dark, #00366e);
+	background: var(--Primary-Dark, color(display-p3 0.08 0.2031 0.4));
+	color: rgba(255, 255, 255, 0.98);
+}
+
+.responsive-banner-notif {
+	color: rgba(0, 0, 0, 0.8);
+	text-align: start;
 }
 
 .input-graphic {
@@ -482,4 +507,39 @@ button:disabled {
 	background: white;
 	color: black;
 	border: 1px solid black;
+}
+
+@media screen and (max-width: 1024px) {
+	.App {
+		height: 100%;
+		width: 100%;
+		justify-content: center;
+		align-self: center;
+	}
+	.preview {
+		display: flex;
+		flex-direction: column;
+	}
+	.input-panel {
+		width: 100%;
+	}
+	.input-graphic {
+		width: auto;
+		height: max-content;
+	}
+	.responsive-banner {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	form {
+		display: none;
+	}
+	.bottom-banner {
+		display: none;
+	}
+	.responsive-banner {
+		display: flex;
+	}
 }

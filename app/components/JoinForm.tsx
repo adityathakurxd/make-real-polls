@@ -58,7 +58,6 @@ const JoinForm = () => {
 		<>
 			<div className="input-panel">
 				<Svg100MsLogoIcon style={{ height: '150px', width: '150px' }} />
-
 				<div>
 					<h4 style={{ margin: '0px' }}>
 						Generate Polls with
@@ -70,7 +69,6 @@ const JoinForm = () => {
 						click on create poll. That’s it.
 					</p>
 				</div>
-
 				<form onSubmit={handleSubmit}>
 					<div className="input-container">
 						<div className="input-label">Your Name</div>
@@ -115,10 +113,17 @@ const JoinForm = () => {
 						<ArrowRightIcon style={{ height: '15px', width: '15px', paddingLeft: '5px' }} />
 					</button>
 				</form>
-
 				<div className="bottom-banner">
 					<div className="bottom-room-info">PUBLIC ROOM</div>
 					<div className="bottom-notif body-regular-text ">There might be others in the room</div>
+				</div>
+				<div className="responsive-banner">
+					<div className="responsive-banner-info">USE DESKTOP</div>
+					<div className="responsive-banner-notif body-regular-text ">
+						This website is best expeienced on a Desktop or Laptop.
+						<br />
+						We are working to improve for mobile devices.
+					</div>
 				</div>
 			</div>
 
