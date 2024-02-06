@@ -13,6 +13,7 @@
     "@100mslive/react-sdk": "^0.8.23",
     "@100mslive/roomkit-react": "^0.2.0",
     "@tldraw/tldraw": "^2.0.0-canary.ba4091c59418",
+    "@vercel/analytics": "^1.1.3",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
