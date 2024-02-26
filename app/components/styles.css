@@ -9,13 +9,12 @@
 
 /* Side pane for conference section */
 .conference-section {
-	/* position: absolute; */
-	top: 0;
-	left: 0;
-	width: 400px; /* Adjust width as needed */
+	padding: 8px;
+	box-sizing: border-box;
+	overflow-y: auto;
+	width: 350px; /* Adjust width as needed */
 	height: 100%;
 	background-color: var(--surface_default); /* Light background for visibility */
-	overflow-y: auto; /* Enable scroll for overflow content */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -37,7 +36,6 @@
 
 /* Additional styling for peers container */
 .peers-container {
-	padding: 10px;
 	width: 100%;
 }
 

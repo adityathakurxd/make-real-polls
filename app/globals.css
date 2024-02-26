@@ -384,16 +384,6 @@ input::placeholder {
 	cursor: pointer;
 }
 
-.conference-section {
-	padding: 20px;
-	padding-bottom: 0px;
-	max-width: 960px;
-	margin: 0 auto;
-	max-height: 100vh;
-	box-sizing: border-box;
-	overflow-y: auto;
-}
-
 .tile {
 	height: 180px;
 	width: 100%;
@@ -441,10 +431,10 @@ input::placeholder {
 
 .control-bar {
 	display: flex;
-	padding: 8px 12px;
+	/* padding: 8px 12px; */
 	justify-content: space-between;
-	align-items: center;
-	width: 400px;
+	align-items: flex-end;
+	width: 100%;
 }
 
 .btn-control:hover {
