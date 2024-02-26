@@ -59,7 +59,7 @@ export function CreatePollButton() {
 					/>
 				) : (
 					<>
-						<span className="create-poll-text">Make Poll</span>
+						<span className="create-poll-text">Create Poll</span>
 						<SparkleIcon style={{ marginRight: -4 }} />
 					</>
 				)}
