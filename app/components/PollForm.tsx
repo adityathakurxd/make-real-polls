@@ -12,8 +12,8 @@ interface PollFormProps {
 
 const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 	const hmsActions = useHMSActions()
-	const editor = useEditor()
-	const { addToast } = useToasts()
+	// const editor = useEditor()
+	// const { addToast } = useToasts()
 
 	const { questionData, setQuestionData } = useQuestionContext()
 	const [localQuestionData, setLocalQuestionData] = useState(questionData)
@@ -22,27 +22,27 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 		setLocalQuestionData(questionData)
 	}, [questionData])
 
-	const regenerateQuestion = useCallback(
-		async (question: string) => {
-			try {
-				await makeReal(
-					editor,
-					(value) => {
-						setQuestionData(value)
-					},
-					question
-				)
-			} catch (e) {
-				console.error(e)
-				addToast({
-					icon: 'cross-2',
-					title: 'Something went wrong',
-					description: (e as Error).message.slice(0, 100),
-				})
-			}
-		},
-		[editor, setQuestionData, addToast]
-	)
+	// const regenerateQuestion = useCallback(
+	// 	async (question: string) => {
+	// 		try {
+	// 			await makeReal(
+	// 				editor,
+	// 				(value) => {
+	// 					setQuestionData(value)
+	// 				},
+	// 				question
+	// 			)
+	// 		} catch (e) {
+	// 			console.error(e)
+	// 			addToast({
+	// 				icon: 'cross-2',
+	// 				title: 'Something went wrong',
+	// 				description: (e as Error).message.slice(0, 100),
+	// 			})
+	// 		}
+	// 	},
+	// 	[editor, setQuestionData, addToast]
+	// )
 
 	const createPollOnClick = async () => {
 		const id = Date.now().toString()
@@ -121,17 +121,17 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 				style={{
 					width: '100%',
 					display: 'flex',
-					justifyContent: 'space-between',
+					justifyContent: 'flex-end',
 					alignItems: 'center',
 					marginTop: '1rem',
 				}}
 			>
-				<button
+				{/* <button
 					className="secondary"
 					onClick={() => regenerateQuestion(localQuestionData.question)}
 				>
 					Regenerate
-				</button>
+				</button> */}
 				<button className="primary" onClick={createPollOnClick}>
 					Launch Poll
 				</button>
