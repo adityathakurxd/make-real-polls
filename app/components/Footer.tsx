@@ -23,7 +23,7 @@ function Footer() {
 				<button className="btn-control secondary" onClick={toggleVideo}>
 					{isLocalVideoEnabled ? <VideoOnIcon /> : <VideoOffIcon />}
 				</button>
-				<button
+				{/* <button
 					className="btn-control"
 					style={{
 						backgroundColor: 'var(--error_default)',
@@ -40,7 +40,7 @@ function Footer() {
 						}}
 					/>
 					<p>Leave</p>
-				</button>
+				</button> */}
 			</div>
 		</div>
 	)

@@ -22,6 +22,19 @@
 	justify-content: space-between;
 }
 
+.live-results-container {
+	flex-grow: 1;
+	overflow-y: auto;
+	position: relative;
+	width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+	.conference-section {
+		width: 280px;
+	}
+}
+
 /* Main editor section */
 .editor {
 	/* position: absolute; */
