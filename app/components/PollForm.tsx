@@ -1,9 +1,7 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useHMSActions } from '@100mslive/react-sdk'
-import { useEditor, useToasts } from '@tldraw/tldraw'
 import Modal from './Modal'
 import { HMSPollQuestionType } from './constants'
-import { makeReal } from '../makeReal'
 import { useQuestionContext } from '../context'
 
 interface PollFormProps {
