@@ -40,3 +40,6 @@
 }
 
 /* You can add more specific styles here */
+.tlui-navigation-zone {
+	display: none;
+}
