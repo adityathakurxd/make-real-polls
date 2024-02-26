@@ -8,7 +8,7 @@ import {
 	fetchFromOpenAi,
 } from './lib/fetchFromOpenAi'
 
-const SYSTEM_PROMPT = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
+const SYSTEM_PROMPT = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question generate the correct answer which is 4 and three other options which could be 2,3,5, etc
 	When sent new image as input, respond ONLY with the a json of question and array called options with 4 string values without any words like "json" or characters like "\`".`
 
 export async function makeReal(
@@ -19,7 +19,7 @@ export async function makeReal(
 	// we can't make anything real if there's nothing selected
 	const selectedShapes = editor.getSelectedShapes()
 	if (selectedShapes.length === 0) {
-		throw new Error('First select something to make real.')
+		throw new Error('First select something to make a poll from.')
 	}
 
 	// first, we build the prompt that we'll send to openai.
