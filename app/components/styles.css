@@ -1,7 +1,8 @@
 /* Container for the entire conference component */
 .conference-component {
 	position: relative;
-	height: 100vh; /* Adjust height as needed */
+	height: 100%; /* Adjust height as needed */
+	width: 100%;
 }
 
 /* Side pane for conference section */
@@ -24,11 +25,13 @@
 .editor {
 	position: absolute;
 	top: 0;
-	right: 0;
-	/* right: 400px; */
-	bottom: 0;
 	z-index: 1; /* Lower z-index to be beneath the side pane */
-	/* Additional styling for the editor */
+	inset: 0;
+	overflow: visible;
+	background-color: var(--white);
+	overflow: hidden;
+	overscroll-behavior: none;
+	touch-action: none;
 }
 
 /* Additional styling for peers container */

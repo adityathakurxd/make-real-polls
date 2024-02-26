@@ -11,7 +11,6 @@
 	-moz-osx-font-smoothing: grayscale;
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 
 	--surface_dark: #000;
 	--surface_default: #e0ecfc;
@@ -23,8 +22,13 @@
 	background-color: #ffffffde;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0 !important;
+	overflow: hidden;
 }
 
 h4 {
@@ -58,13 +62,6 @@ h4 {
 
 .tlui-debug-panel {
 	display: none !important;
-}
-
-.editor {
-	position: fixed;
-	inset: 0;
-	overflow: visible;
-	background-color: var(--white);
 }
 
 .tldrawLogo {
@@ -438,10 +435,10 @@ input::placeholder {
 
 .control-bar {
 	display: flex;
-	padding: 12px 10px;
+	padding: 8px 12px;
 	justify-content: space-between;
+	align-items: center;
 	width: 400px;
-	box-sizing: border-box;
 }
 
 .btn-control:hover {
@@ -470,11 +467,12 @@ button:hover {
 	opacity: 0.8;
 }
 
-button:disabled {
+/* This messes with the tldraw editor's styling */
+/* button:disabled {
 	opacity: 1;
 	cursor: not-allowed;
 	background-color: grey;
-}
+} */
 
 .btn-control {
 	width: 40px;
@@ -510,22 +508,11 @@ button:disabled {
 }
 
 @media screen and (max-width: 1024px) {
-	.App {
-		height: 100%;
-		width: 100%;
-		justify-content: center;
-		align-self: center;
-	}
-	.preview {
-		display: flex;
-		flex-direction: column;
-	}
 	.input-panel {
 		width: 100%;
 	}
 	.input-graphic {
-		width: auto;
-		height: max-content;
+		display: none;
 	}
 	.responsive-banner {
 		display: none;

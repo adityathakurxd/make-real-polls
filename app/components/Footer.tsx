@@ -7,13 +7,13 @@ function Footer() {
 
 	return (
 		<div className="control-bar">
-			<a target="_blank" href="https://www.100ms.live">
+			<a target="_blank" href="https://www.100ms.live" style={{ width: 48, height: 48 }}>
 				<img
 					alt="100ms Logo"
 					src="https://storage.googleapis.com/100ms-cms-prod/cms/100ms_18a29f69f2/100ms_18a29f69f2.png?updated_at=2023-08-18T06:05:59.858Z"
 					height={48}
 					width={48}
-					style={{ position: 'relative', bottom: 2 }}
+					style={{ position: 'relative' }}
 				/>
 			</a>
 			<div style={{ display: 'flex', gap: '0.5rem' }}>
