@@ -29,31 +29,34 @@ export const LiveResults = () => {
 	}
 
 	return (
-		<div
-			style={{
-				maxHeight: 'calc(50% - 70px)',
-				overflowY: 'auto',
-				position: 'relative',
-				paddingRight: '0.75rem',
-				marginRight: '-0.75rem',
-			}}
-		>
+		<>
 			<h3
 				style={{
 					color: 'black',
-					position: 'sticky',
-					top: 0,
-					margin: '0.5rem 0',
+					margin: 0,
+					padding: '0.5rem',
 					background: 'var(--surface_default)',
+					alignSelf: 'flex-start',
 				}}
 			>
 				Live poll{livePolls?.length > 1 ? 's' : ''}
 			</h3>
-			<div style={{ flexDirection: 'column', display: 'flex', gap: '0.75rem' }}>
-				{livePolls?.map((livePoll) => (
-					<PollVotes key={livePoll.id} poll={livePoll} />
-				))}
+			<div
+				style={{
+					flexGrow: 1,
+					overflowY: 'auto',
+					position: 'relative',
+					paddingRight: '0.75rem',
+					marginRight: '-0.75rem',
+					width: '100%',
+				}}
+			>
+				<div style={{ flexDirection: 'column', display: 'flex', gap: '0.75rem' }}>
+					{livePolls?.map((livePoll) => (
+						<PollVotes key={livePoll.id} poll={livePoll} />
+					))}
+				</div>
 			</div>
-		</div>
+		</>
 	)
 }
