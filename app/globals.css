@@ -75,31 +75,37 @@ h4 {
 	bottom: 60px;
 }
 
-.makeRealButton {
-	background: var(--color-primary);
+.create-poll-button {
 	color: white;
 	border: none;
 	font: inherit;
-	font-weight: 600;
-	padding: var(--space-3) var(--space-4);
 	border-radius: var(--radius-2);
-	margin: var(--space-3);
+	height: 40px;
+	margin: var(--space-2) var(--space-3);
 	cursor: pointer;
+	gap: 6px;
 	pointer-events: all;
-	position: fixed;
-	top: 18px;
-	left: 420px;
+	top: 0;
+	right: 0;
 	z-index: 10000;
+	padding: 8px 16px;
+	height: fit-content;
+	background: rgb(59, 130, 246);
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
-.makeRealButton:hover {
-	opacity: 0.95;
+.create-poll-button:hover {
+	background-color: rgb(29, 78, 216);
 }
 
 .create-poll-text {
-	margin-right: 5px;
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 800;
+	flex-shrink: 0;
 }
 
 /* ------------------ Api Key Input ----------------- */

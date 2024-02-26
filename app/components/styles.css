@@ -3,30 +3,31 @@
 	position: relative;
 	height: 100%; /* Adjust height as needed */
 	width: 100%;
+	display: flex;
+	flex-direction: row;
 }
 
 /* Side pane for conference section */
 .conference-section {
-	position: absolute;
+	/* position: absolute; */
 	top: 0;
 	left: 0;
 	width: 400px; /* Adjust width as needed */
 	height: 100%;
-	z-index: 2; /* Higher z-index to be on top */
 	background-color: var(--surface_default); /* Light background for visibility */
 	overflow-y: auto; /* Enable scroll for overflow content */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	flex-shrink: 0;
 	justify-content: space-between;
 }
 
 /* Main editor section */
 .editor {
-	position: absolute;
-	top: 0;
-	z-index: 1; /* Lower z-index to be beneath the side pane */
-	inset: 0;
+	/* position: absolute; */
+	width: 100%;
+	height: 100%;
 	overflow: visible;
 	background-color: var(--white);
 	overflow: hidden;
