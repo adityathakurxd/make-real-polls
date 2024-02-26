@@ -15,8 +15,8 @@ export const LiveResults = () => {
 					padding: '4rem 2rem',
 				}}
 			>
-				{/* eslint-disable-next-line */}
 				<img
+					alt="Create poll"
 					height={75}
 					width={75}
 					src="https://storage.googleapis.com/100ms-cms-prod/cms/create_poll_67b25c6048/create_poll_67b25c6048.png?updated_at=2024-01-12T11:18:48.664Z"
