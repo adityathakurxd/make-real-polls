@@ -31,7 +31,7 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 
 	return (
 		<Modal onClose={onClose} title={pollNotificationData.title}>
-			<div>
+			<div style={{ display: 'flex', gap: 4, flexDirection: 'column' }}>
 				{pollNotificationData.questions[0].options.map(
 					(
 						option: {
@@ -40,9 +40,17 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 						},
 						index: number
 					) => (
-						<div
+						<label
 							key={index}
-							style={{ display: 'flex', alignItems: 'center', margin: '0.25rem 0', gap: '0.25rem' }}
+							htmlFor={'' + index}
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								margin: '0.25rem 0',
+								gap: '0.25rem',
+								width: 'fit-content',
+								cursor: 'pointer',
+							}}
 						>
 							<input
 								style={{ cursor: 'pointer' }}
@@ -50,9 +58,15 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 								value={option.index}
 								checked={Number(selectedOptionIndex) === index + 1}
 								onChange={handleChange}
+								id={'' + index}
 							/>
-							<p style={{ color: 'black', fontWeight: '500' }}>{option.text}</p>
-						</div>
+							<label
+								htmlFor={'' + index}
+								style={{ color: 'black', fontWeight: '500', cursor: 'pointer' }}
+							>
+								{option.text}
+							</label>
+						</label>
 					)
 				)}
 
