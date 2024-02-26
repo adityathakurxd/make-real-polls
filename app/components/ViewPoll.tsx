@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Modal from './Modal'
 import { useHMSActions } from '@100mslive/react-sdk'
 import { toast } from 'react-toastify'
+import { RefreshIcon } from '@100mslive/react-icons'
 
 interface ViewPollProps {
 	pollNotificationData: any
@@ -11,6 +12,7 @@ interface ViewPollProps {
 const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) => {
 	const actions = useHMSActions()
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | undefined>()
+	const [loading, setLoading] = useState(false)
 
 	function handleChange(event: any) {
 		setSelectedOptionIndex(event.target.value)
@@ -18,6 +20,7 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 
 	const handleSubmit = async (event: any) => {
 		event.preventDefault()
+		setLoading(true)
 
 		await actions.interactivityCenter.addResponsesToPoll(pollNotificationData.id, [
 			{
@@ -25,7 +28,7 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 				option: Number(selectedOptionIndex),
 			},
 		])
-		toast(`Vote registered!`)
+		toast(`Vote submitted!`)
 		onClose()
 	}
 
@@ -71,7 +74,7 @@ const ViewPoll: React.FC<ViewPollProps> = ({ pollNotificationData, onClose }) =>
 				)}
 
 				<button className="primary" onClick={handleSubmit} style={{ marginTop: '0.75rem' }}>
-					Submit
+					{loading ? <RefreshIcon style={{ animation: 'spin 2s linear infinite' }} /> : 'Submit'}
 				</button>
 			</div>
 		</Modal>

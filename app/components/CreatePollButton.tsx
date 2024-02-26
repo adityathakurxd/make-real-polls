@@ -51,12 +51,7 @@ export function CreatePollButton() {
 				disabled={fetchingQuestion}
 			>
 				{fetchingQuestion ? (
-					<RefreshIcon
-						style={{
-							transform: 'rotate(180deg)',
-							transition: 'transform 2s linear',
-						}}
-					/>
+					<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
 				) : (
 					<>
 						<span className="create-poll-text">Create Poll</span>
