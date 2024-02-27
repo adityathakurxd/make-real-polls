@@ -40,15 +40,15 @@ const JoinForm = () => {
 
 		const { name: userName = '', roomCode = '' } = inputValues
 
-		try {
-			var authToken = ''
-			if (activeTabRole === 'teacher') {
-				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: 'afu-oanp-nlh' })
-			} else {
-				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: 'dsv-tdwb-mqk' })
-			}
+		console.log('Form submitted:', userName, roomCode)
 
-			await hmsActions.join({ userName, authToken })
+		try {
+			// Call the server action using the API route
+			const response = await fetch('/api/create', {
+				method: 'GET',
+			})
+
+			console.log('Response:', response.json())
 		} catch (e) {
 			console.error(e)
 		}
