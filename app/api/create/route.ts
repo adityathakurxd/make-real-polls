@@ -19,9 +19,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
 			const body = await response.json()
 			return NextResponse.json({ body }, { status: 200 })
 		} 
+
+		return NextResponse.json({ message: 'Failed to create room' }, { status: 401 })
 		
 	} catch (error) {
 		console.error('Error creating room:', error)
-		return NextResponse.json({ message: 'Failed to create room' }, { status: 401 })
+		return NextResponse.json({ message: 'Internal Server error' }, { status: 500 })
 	}
 }
