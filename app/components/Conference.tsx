@@ -4,7 +4,7 @@ import '@tldraw/tldraw/tldraw.css'
 import { TldrawLogo } from '../components/TldrawLogo'
 import { CreatePollButton } from '../components/CreatePollButton'
 import './styles.css'
-import { Tldraw } from '@tldraw/tldraw'
+import { Tldraw, coreShapes } from '@tldraw/tldraw'
 import { useYjsStore } from '../useYjsStore'
 import { useState } from 'react'
 import { ChevronRightIcon } from '@/node_modules/@100mslive/react-icons/dist/index'
@@ -16,9 +16,10 @@ const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 function Conference() {
 	const peers = useHMSStore(selectPeers)
+	const roomCode = localStorage.getItem('roomCode') ?? ''
 
 	const store = useYjsStore({
-		roomId: 'example17',
+		roomId: roomCode,
 		hostUrl: HOST_URL,
 	})
 

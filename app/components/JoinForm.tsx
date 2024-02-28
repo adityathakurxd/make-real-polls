@@ -70,11 +70,14 @@ const JoinForm = () => {
 								authToken = await hmsActions.getAuthTokenByRoomCode({
 									roomCode: roomCodeForTeacher,
 								})
+
+								localStorage.setItem('roomCode', roomCodeForTeacher)
 							} else {
 								authToken = await hmsActions.getAuthTokenByRoomCode({
 									roomCode: roomCodeForStudent,
 								})
 							}
+
 							await hmsActions.join({ userName, authToken })
 						}
 					})
