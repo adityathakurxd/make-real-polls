@@ -40,15 +40,48 @@ const JoinForm = () => {
 
 		const { name: userName = '', roomCode = '' } = inputValues
 
-		console.log('Form submitted:', userName, roomCode)
-
 		try {
-			// Call the server action using the API route
 			const response = await fetch('/api/create', {
 				method: 'GET',
 			})
 
-			console.log('Response:', response.json())
+			response.json().then(async (result) => {
+				const responseBody = result.body
+				if (responseBody) {
+					const roomId = responseBody.id
+
+					const res = await fetch('/api/create', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ roomId }),
+					})
+
+					res.json().then(async (result) => {
+						const data = result.body.data
+						if (data.length >= 2) {
+							const roomCodeForStudent = data[0].code
+							const roomCodeForTeacher = data[1].code
+
+							var authToken = ''
+
+							if (activeTabRole === 'teacher') {
+								authToken = await hmsActions.getAuthTokenByRoomCode({
+									roomCode: roomCodeForTeacher,
+								})
+							} else {
+								authToken = await hmsActions.getAuthTokenByRoomCode({
+									roomCode: roomCodeForStudent,
+								})
+							}
+							await hmsActions.join({ userName, authToken })
+						}
+					})
+				} else {
+					console.error("Response body is empty or does not have an 'id' field.")
+				}
+			})
 		} catch (e) {
 			console.error(e)
 		}
