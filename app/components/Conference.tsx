@@ -11,6 +11,7 @@ import { ChevronRightIcon } from '@/node_modules/@100mslive/react-icons/dist/ind
 import { Pagination } from './Pagination'
 import { LiveResults } from './LiveResults'
 import Footer from './Footer'
+import CopyInviteButton from './CopyInviteButton'
 
 const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
@@ -44,7 +45,15 @@ function Conference() {
 					) : null}
 				</div>
 				<LiveResults />
-				<div>Invite others: make-real-polls.vercel.app/?room={roomCode}</div>
+				<div className="invite-banner">
+					<div className="invite-text">INVITE</div>
+					<div className="invite-link body-regular-text" id="inviteLink">
+						make-real-polls.vercel.app/?room={roomCode}
+					</div>
+					<div className="invite-link body-regular-text">
+						<CopyInviteButton />
+					</div>
+				</div>
 				<Footer />
 			</div>
 			<div className="editor">
