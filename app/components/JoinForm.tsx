@@ -4,6 +4,7 @@ import { useHMSActions } from '@100mslive/react-sdk'
 import Image from 'next/image'
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { Inter } from 'next/font/google'
+import { useSearchParams } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +17,9 @@ type InputValues = {
 const JoinForm = () => {
 	const [activeTabRole, setActiveTabRole] = useState('teacher')
 	const hmsActions = useHMSActions()
+
+	const searchParams = useSearchParams()
+	const roomCodeParam = searchParams.get('room') || ''
 
 	const handleTabClick = (tab) => {
 		setActiveTabRole(tab)
@@ -40,52 +44,63 @@ const JoinForm = () => {
 
 		const { name: userName = '', roomCode = '' } = inputValues
 
-		try {
-			const response = await fetch('/api/create', {
-				method: 'GET',
-			})
-
-			const hmsRoomsAPIResponse = await response.json()
-
-			if (hmsRoomsAPIResponse) {
-				const roomId = hmsRoomsAPIResponse.body.id
-
-				const res = await fetch('/api/create', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ roomId }),
+		if (roomCodeParam) {
+			try {
+				localStorage.setItem('roomCode', roomCodeParam)
+				let authToken = ''
+				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
+				await hmsActions.join({ userName, authToken })
+			} catch (e) {
+				alert('Room Code might be invalid or expired. Please try again.')
+			}
+		} else {
+			try {
+				const response = await fetch('/api/create', {
+					method: 'GET',
 				})
 
-				const hmsRoomCodesAPIResponse = await res.json()
-				const data = hmsRoomCodesAPIResponse.body.data
+				const hmsRoomsAPIResponse = await response.json()
 
-				if (data.length >= 2) {
-					const roomCodeForStudent = data[0].code
-					const roomCodeForTeacher = data[1].code
+				if (hmsRoomsAPIResponse) {
+					const roomId = hmsRoomsAPIResponse.body.id
 
-					let authToken = ''
+					const res = await fetch('/api/create', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ roomId }),
+					})
 
-					if (activeTabRole === 'teacher') {
-						authToken = await hmsActions.getAuthTokenByRoomCode({
-							roomCode: roomCodeForTeacher,
-						})
+					const hmsRoomCodesAPIResponse = await res.json()
+					const data = hmsRoomCodesAPIResponse.body.data
 
-						localStorage.setItem('roomCode', roomCodeForTeacher)
-					} else {
-						authToken = await hmsActions.getAuthTokenByRoomCode({
-							roomCode: roomCodeForStudent,
-						})
+					if (data.length >= 2) {
+						const roomCodeForStudent = data[0].code
+						const roomCodeForTeacher = data[1].code
+
+						let authToken = ''
+
+						if (activeTabRole === 'teacher') {
+							authToken = await hmsActions.getAuthTokenByRoomCode({
+								roomCode: roomCodeForTeacher,
+							})
+
+							localStorage.setItem('roomCode', roomCodeForTeacher)
+						} else {
+							authToken = await hmsActions.getAuthTokenByRoomCode({
+								roomCode: roomCodeForStudent,
+							})
+						}
+
+						await hmsActions.join({ userName, authToken })
 					}
-
-					await hmsActions.join({ userName, authToken })
+				} else {
+					alert('Failed to create a new room')
 				}
-			} else {
-				alert('Failed to create a new room')
+			} catch (e) {
+				alert('Failed to join room')
 			}
-		} catch (e) {
-			alert('Failed to join room')
 		}
 	}
 
@@ -117,34 +132,35 @@ const JoinForm = () => {
 							placeholder="Name"
 						/>
 					</div>
+					{roomCodeParam ? null : (
+						<div className="input-container">
+							<div className="input-label">Join as</div>
 
-					<div className="input-container">
-						<div className="input-label">Join as</div>
-
-						<div className="tabs-container">
-							<div className="tab-item">
-								<button
-									type="button"
-									onClick={() => handleTabClick('teacher')}
-									className={activeTabRole === 'teacher' ? 'active-tab' : 'disabled-tab'}
-								>
-									Teacher
-								</button>
-							</div>
-							<div className="tab-item">
-								<button
-									type="button"
-									onClick={() => handleTabClick('student')}
-									className={activeTabRole === 'student' ? 'active-tab' : 'disabled-tab'}
-								>
-									Student
-								</button>
+							<div className="tabs-container">
+								<div className="tab-item">
+									<button
+										type="button"
+										onClick={() => handleTabClick('teacher')}
+										className={activeTabRole === 'teacher' ? 'active-tab' : 'disabled-tab'}
+									>
+										Teacher
+									</button>
+								</div>
+								<div className="tab-item">
+									<button
+										type="button"
+										onClick={() => handleTabClick('student')}
+										className={activeTabRole === 'student' ? 'active-tab' : 'disabled-tab'}
+									>
+										Student
+									</button>
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 
 					<button type="submit" className="btn-primary primary">
-						Join Room
+						Join Room {roomCodeParam}
 						<ArrowRightIcon style={{ height: '15px', width: '15px', paddingLeft: '5px' }} />
 					</button>
 				</form>

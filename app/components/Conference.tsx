@@ -44,6 +44,7 @@ function Conference() {
 					) : null}
 				</div>
 				<LiveResults />
+				<div>Invite others: make-real-polls.vercel.app/?room={roomCode}</div>
 				<Footer />
 			</div>
 			<div className="editor">
