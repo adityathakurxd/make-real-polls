@@ -45,48 +45,47 @@ const JoinForm = () => {
 				method: 'GET',
 			})
 
-			response.json().then(async (result) => {
-				const responseBody = result.body
-				if (responseBody) {
-					const roomId = responseBody.id
+			const hmsRoomsAPIResponse = await response.json()
 
-					const res = await fetch('/api/create', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({ roomId }),
-					})
+			if (hmsRoomsAPIResponse) {
+				const roomId = hmsRoomsAPIResponse.body.id
 
-					res.json().then(async (result) => {
-						const data = result.body.data
-						if (data.length >= 2) {
-							const roomCodeForStudent = data[0].code
-							const roomCodeForTeacher = data[1].code
+				const res = await fetch('/api/create', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ roomId }),
+				})
 
-							var authToken = ''
+				const hmsRoomCodesAPIResponse = await res.json()
+				const data = hmsRoomCodesAPIResponse.body.data
 
-							if (activeTabRole === 'teacher') {
-								authToken = await hmsActions.getAuthTokenByRoomCode({
-									roomCode: roomCodeForTeacher,
-								})
+				if (data.length >= 2) {
+					const roomCodeForStudent = data[0].code
+					const roomCodeForTeacher = data[1].code
 
-								localStorage.setItem('roomCode', roomCodeForTeacher)
-							} else {
-								authToken = await hmsActions.getAuthTokenByRoomCode({
-									roomCode: roomCodeForStudent,
-								})
-							}
+					let authToken = ''
 
-							await hmsActions.join({ userName, authToken })
-						}
-					})
-				} else {
-					console.error("Response body is empty or does not have an 'id' field.")
+					if (activeTabRole === 'teacher') {
+						authToken = await hmsActions.getAuthTokenByRoomCode({
+							roomCode: roomCodeForTeacher,
+						})
+
+						localStorage.setItem('roomCode', roomCodeForTeacher)
+					} else {
+						authToken = await hmsActions.getAuthTokenByRoomCode({
+							roomCode: roomCodeForStudent,
+						})
+					}
+
+					await hmsActions.join({ userName, authToken })
 				}
-			})
+			} else {
+				alert('Failed to create a new room')
+			}
 		} catch (e) {
-			console.error(e)
+			alert('Failed to join room')
 		}
 	}
 

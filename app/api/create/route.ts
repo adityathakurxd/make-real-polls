@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 			body: JSON.stringify({
 				name: `polls-ai-${randomUUID()}`,
 				description: 'This is a sample description for the room',
-				template_id: '65a4de78cd666ed1654e1f76', // Replace with your actual template ID
+				template_id: process.env.TEMPLATE_ID, 
 			}),
 		})
 
