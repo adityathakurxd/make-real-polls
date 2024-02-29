@@ -48,7 +48,6 @@ export const RoomScreen = () => {
 	}, [notification, localPeerID])
 
 	return (
-		// @ts-ignore
 		<QuestionContext.Provider value={{ questionData, setQuestionData }}>
 			<ToastContainer />
 			<Conference />

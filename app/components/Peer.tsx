@@ -28,13 +28,14 @@ const Peer: React.FC<PeerProps> = ({ peer }) => {
 					textTransform: 'capitalize',
 					margin: 0,
 					background: 'rgba(0, 0, 0, 0.5)',
-					padding: '0.125rem',
+					padding: '0.125rem 0.25rem',
 					borderRadius: '0.25rem',
 					fontSize: '12px',
 					fontWeight: '600',
+					color: 'white',
 				}}
 			>
-				{roleName}
+				{peer.name} {peer.isLocal ? '(You)' : ''}
 			</p>
 			<div className="tile tile-cover">
 				<PersonIcon height={32} width={32} />
@@ -46,9 +47,9 @@ const Peer: React.FC<PeerProps> = ({ peer }) => {
 				muted
 				playsInline
 			/>
-			<div className="peer-name">
+			{/* <div className="peer-name">
 				{peer.name} {peer.isLocal ? '(You)' : ''}
-			</div>
+			</div> */}
 		</div>
 	)
 }

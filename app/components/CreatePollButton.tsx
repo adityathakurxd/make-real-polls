@@ -46,20 +46,16 @@ export function CreatePollButton() {
 			{pollFormIsShown && questionData && <PollForm onClose={hidePollFormHandler} />}
 			<button
 				title="Create poll"
-				className="makeRealButton btn-control primary"
+				className="create-poll-button"
 				onClick={handleClick}
 				disabled={fetchingQuestion}
 			>
 				{fetchingQuestion ? (
-					<RefreshIcon
-						style={{
-							transform: 'rotate(180deg)',
-							transition: 'transform 2s linear',
-						}}
-					/>
+					<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
 				) : (
 					<>
-						<p className="create-poll-text">Create Poll</p> <SparkleIcon />
+						<span className="create-poll-text">Create Poll</span>
+						<SparkleIcon style={{ marginRight: -4 }} />
 					</>
 				)}
 			</button>
