@@ -47,8 +47,7 @@ const JoinForm = () => {
 		if (roomCodeParam) {
 			try {
 				localStorage.setItem('roomCode', roomCodeParam)
-				let authToken = ''
-				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
+				const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
 				await hmsActions.join({ userName, authToken })
 			} catch (e) {
 				alert('Room Code might be invalid or expired. Please try again.')
@@ -78,20 +77,9 @@ const JoinForm = () => {
 					if (data.length >= 2) {
 						const roomCodeForStudent = data[0].code
 						const roomCodeForTeacher = data[1].code
-
-						let authToken = ''
-
-						if (activeTabRole === 'teacher') {
-							authToken = await hmsActions.getAuthTokenByRoomCode({
-								roomCode: roomCodeForTeacher,
-							})
-
-							localStorage.setItem('roomCode', roomCodeForTeacher)
-						} else {
-							authToken = await hmsActions.getAuthTokenByRoomCode({
-								roomCode: roomCodeForStudent,
-							})
-						}
+						const authToken = await hmsActions.getAuthTokenByRoomCode({
+							roomCode: activeTabRole === 'teacher' ? roomCodeForTeacher : roomCodeForStudent,
+						})
 
 						await hmsActions.join({ userName, authToken })
 					}
