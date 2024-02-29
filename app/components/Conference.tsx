@@ -4,14 +4,13 @@ import '@tldraw/tldraw/tldraw.css'
 import { TldrawLogo } from '../components/TldrawLogo'
 import { CreatePollButton } from '../components/CreatePollButton'
 import './styles.css'
-import { Tldraw, coreShapes } from '@tldraw/tldraw'
+import { Tldraw } from '@tldraw/tldraw'
 import { useYjsStore } from '../useYjsStore'
 import { useState } from 'react'
-import { ChevronRightIcon } from '@/node_modules/@100mslive/react-icons/dist/index'
 import { Pagination } from './Pagination'
 import { LiveResults } from './LiveResults'
 import Footer from './Footer'
-import CopyInviteButton from './CopyInviteButton'
+import CopyButton from './CopyButton'
 
 const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
@@ -46,13 +45,8 @@ function Conference() {
 				</div>
 				<LiveResults />
 				<div className="invite-banner">
-					<div className="invite-text">INVITE</div>
-					<div className="invite-link body-regular-text" id="inviteLink">
-						make-real-polls.vercel.app/?room={roomCode}
-					</div>
-					<div className="invite-link body-regular-text">
-						<CopyInviteButton />
-					</div>
+					<div className="invite-text">COPY INVITE LINK</div>
+					<CopyButton value={`make-real-polls.vercel.app/?room=${roomCode}`} />
 				</div>
 				<Footer />
 			</div>

@@ -2,55 +2,36 @@
 import { ArrowRightIcon, Svg100MsLogoIcon } from '@100mslive/react-icons'
 import { useHMSActions } from '@100mslive/react-sdk'
 import Image from 'next/image'
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
-import { Inter } from 'next/font/google'
+import { useState, FormEvent, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-
-const inter = Inter({ subsets: ['latin'] })
-
-// Define a type for your state
-type InputValues = {
-	name: string
-	roomCode: string // Assuming roomCode is optional
-}
+import { ROLES } from './constants'
+import { useToasts } from '@tldraw/tldraw'
 
 const JoinForm = () => {
-	const [activeTabRole, setActiveTabRole] = useState('teacher')
+	const [activeTabRole, setActiveTabRole] = useState(ROLES.TEACHER)
 	const hmsActions = useHMSActions()
 
 	const searchParams = useSearchParams()
 	const roomCodeParam = searchParams.get('room') || ''
-
-	const handleTabClick = (tab) => {
-		setActiveTabRole(tab)
-	}
-
-	const [inputValues, setInputValues] = useState<InputValues>({
-		name: '',
-		roomCode: '',
-	})
-
-	// Type the event parameter
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInputValues((prevValues) => ({
-			...prevValues,
-			[e.target.name]: e.target.value,
-		}))
-	}
+	const inputRef = useRef<HTMLInputElement>()
+	const { addToast } = useToasts()
 
 	// Type the event parameter
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		const { name: userName = '', roomCode = '' } = inputValues
-
 		if (roomCodeParam) {
 			try {
 				localStorage.setItem('roomCode', roomCodeParam)
 				const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
-				await hmsActions.join({ userName, authToken })
+				await hmsActions.join({ userName: inputRef.current.value, authToken })
 			} catch (e) {
-				alert('Room Code might be invalid or expired. Please try again.')
+				console.error(e)
+				addToast({
+					icon: 'cross-2',
+					title: 'Room Code might be invalid or expired. Please try again.',
+				})
+				localStorage.setItem('roomCode', undefined)
 			}
 		} else {
 			try {
@@ -78,16 +59,29 @@ const JoinForm = () => {
 						const roomCodeForStudent = data[0].code
 						const roomCodeForTeacher = data[1].code
 						const authToken = await hmsActions.getAuthTokenByRoomCode({
-							roomCode: activeTabRole === 'teacher' ? roomCodeForTeacher : roomCodeForStudent,
+							roomCode: activeTabRole === ROLES.TEACHER ? roomCodeForTeacher : roomCodeForStudent,
 						})
-
-						await hmsActions.join({ userName, authToken })
+						try {
+							await hmsActions.join({ userName: inputRef.current.value, authToken })
+						} catch (e) {
+							addToast({
+								icon: 'cross-2',
+								title: 'Failed to join the room',
+							})
+							setTimeout(() => window.location.reload(), 2000)
+						}
 					}
 				} else {
-					alert('Failed to create a new room')
+					addToast({
+						icon: 'cross-2',
+						title: 'Failed to create a new room',
+					})
 				}
 			} catch (e) {
-				alert('Failed to join room')
+				addToast({
+					icon: 'cross-2',
+					title: 'Failed to join room',
+				})
 			}
 		}
 	}
@@ -110,39 +104,25 @@ const JoinForm = () => {
 				<form onSubmit={handleSubmit}>
 					<div className="input-container">
 						<div className="input-label">Your Name</div>
-						<input
-							required
-							id="name"
-							type="text"
-							name="name"
-							value={inputValues.name}
-							onChange={handleInputChange}
-							placeholder="Name"
-						/>
+						<input required id="name" type="text" name="name" ref={inputRef} placeholder="Name" />
 					</div>
 					{roomCodeParam ? null : (
 						<div className="input-container">
 							<div className="input-label">Join as</div>
 
 							<div className="tabs-container">
-								<div className="tab-item">
-									<button
-										type="button"
-										onClick={() => handleTabClick('teacher')}
-										className={activeTabRole === 'teacher' ? 'active-tab' : 'disabled-tab'}
-									>
-										Teacher
-									</button>
-								</div>
-								<div className="tab-item">
-									<button
-										type="button"
-										onClick={() => handleTabClick('student')}
-										className={activeTabRole === 'student' ? 'active-tab' : 'disabled-tab'}
-									>
-										Student
-									</button>
-								</div>
+								{Object.values(ROLES).map((role) => (
+									<div className="tab-item" key={role}>
+										<button
+											type="button"
+											onClick={() => setActiveTabRole(role)}
+											style={{ textTransform: 'capitalize' }}
+											className={activeTabRole === role ? 'active-tab' : 'disabled-tab'}
+										>
+											{role}
+										</button>
+									</div>
+								))}
 							</div>
 						</div>
 					)}
@@ -157,17 +137,18 @@ const JoinForm = () => {
 					<div className="bottom-notif body-regular-text ">There might be others in the room</div>
 				</div>
 				<div className="responsive-banner">
-					<div className="responsive-banner-info">USE DESKTOP</div>
-					<div className="responsive-banner-notif body-regular-text ">
-						This website is best expeienced on a Desktop or Laptop.
-						<br />
-						We are working to improve for mobile devices.
-					</div>
+					<div className="responsive-banner-info">PLEASE VIEW IN A DESKTOP</div>
 				</div>
 			</div>
 
 			<div className="input-graphic">
-				<Image alt="" src="/images/pollsAI.png" width={641} height={507} />
+				<Image
+					alt="Generate Polls with AI"
+					src="/images/pollsAI.png"
+					priority
+					width={625}
+					height={530}
+				/>
 			</div>
 		</>
 	)
