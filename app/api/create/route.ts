@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -9,7 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 				Authorization: `Bearer ${process.env.MANAGEMENT_TOKEN}`,
 			},
 			body: JSON.stringify({
-				name: 'new-room-axa',
+				name: `polls-ai-${randomUUID()}`,
 				description: 'This is a sample description for the room',
 				template_id: '65a4de78cd666ed1654e1f76', // Replace with your actual template ID
 			}),
