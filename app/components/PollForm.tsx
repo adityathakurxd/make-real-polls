@@ -60,24 +60,12 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 				{
 					text: questionData?.question || '',
 					type: 'single-choice' as HMSPollQuestionType,
-					options: [
-						{
-							text: questionData?.options[0] || '',
+					options: questionData.options.map((option: string) => {
+						return {
+							text: option,
 							isCorrectAnswer: false,
-						},
-						{
-							text: questionData?.options[1] || '',
-							isCorrectAnswer: false,
-						},
-						{
-							text: questionData?.options[2] || '',
-							isCorrectAnswer: false,
-						},
-						{
-							text: questionData?.options[3] || '',
-							isCorrectAnswer: false,
-						},
-					],
+						}
+					}),
 					skippable: true,
 				},
 			])
