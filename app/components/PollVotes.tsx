@@ -6,17 +6,20 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 	const hmsActions = useHMSActions()
 	const question = poll.questions?.[0]
 	const responses = question?.responses
-	const [voteCount, setVoteCount] = useState([0, 0, 0, 0])
+	const [voteCount, setVoteCount] = useState<number[]>([])
 	const totalCount = voteCount.reduce((sum, value) => (sum += value), 0)
 	const localPeerId = useHMSStore(selectLocalPeerID)
 	const showEndPollButton = localPeerId === poll.startedBy
 
 	useEffect(() => {
-		const newVoteCount = [0, 0, 0, 0]
+		const newVoteCount = question.options.map(() => 0)
 		// Option index starts from 1
-		responses?.forEach((response) => newVoteCount[response.option - 1]++)
+		responses?.forEach((response) => {
+			const count = newVoteCount[response.option - 1] ?? 0
+			newVoteCount[response.option - 1] = count + 1
+		})
 		setVoteCount(newVoteCount)
-	}, [responses])
+	}, [responses, question])
 
 	return (
 		<div

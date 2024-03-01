@@ -11,7 +11,6 @@
 	-moz-osx-font-smoothing: grayscale;
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 
 	--surface_dark: #000;
 	--surface_default: #e0ecfc;
@@ -23,8 +22,13 @@
 	background-color: #ffffffde;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0 !important;
+	overflow: hidden;
 }
 
 h4 {
@@ -60,13 +64,6 @@ h4 {
 	display: none !important;
 }
 
-.editor {
-	position: fixed;
-	inset: 0;
-	overflow: visible;
-	background-color: var(--white);
-}
-
 .tldrawLogo {
 	position: absolute;
 	z-index: 9999999;
@@ -78,31 +75,37 @@ h4 {
 	bottom: 60px;
 }
 
-.makeRealButton {
-	background: var(--color-primary);
+.create-poll-button {
 	color: white;
 	border: none;
 	font: inherit;
-	font-weight: 600;
-	padding: var(--space-3) var(--space-4);
 	border-radius: var(--radius-2);
-	margin: var(--space-3);
+	height: 40px;
+	margin: var(--space-2) var(--space-3);
 	cursor: pointer;
+	gap: 6px;
 	pointer-events: all;
-	position: fixed;
-	top: 18px;
-	left: 420px;
+	top: 0;
+	right: 0;
 	z-index: 10000;
+	padding: 8px 16px;
+	height: fit-content;
+	background: rgb(59, 130, 246);
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
-.makeRealButton:hover {
-	opacity: 0.95;
+.create-poll-button:hover {
+	background-color: rgb(29, 78, 216);
 }
 
 .create-poll-text {
-	margin-right: 5px;
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 800;
+	flex-shrink: 0;
 }
 
 /* ------------------ Api Key Input ----------------- */
@@ -382,16 +385,6 @@ input::placeholder {
 	cursor: pointer;
 }
 
-.conference-section {
-	padding: 20px;
-	padding-bottom: 0px;
-	max-width: 960px;
-	margin: 0 auto;
-	max-height: 100vh;
-	box-sizing: border-box;
-	overflow-y: auto;
-}
-
 .tile {
 	height: 180px;
 	width: 100%;
@@ -439,10 +432,10 @@ input::placeholder {
 
 .control-bar {
 	display: flex;
-	padding: 12px 10px;
+	/* padding: 8px 12px; */
 	justify-content: space-between;
-	width: 400px;
-	box-sizing: border-box;
+	align-items: flex-end;
+	width: 100%;
 }
 
 .btn-control:hover {
@@ -471,11 +464,12 @@ button:hover {
 	opacity: 0.8;
 }
 
-button:disabled {
+/* This messes with the tldraw editor's styling */
+/* button:disabled {
 	opacity: 1;
 	cursor: not-allowed;
 	background-color: grey;
-}
+} */
 
 .btn-control {
 	width: 40px;
@@ -538,22 +532,11 @@ button:disabled {
 }
 
 @media screen and (max-width: 1024px) {
-	.App {
-		height: 100%;
-		width: 100%;
-		justify-content: center;
-		align-self: center;
-	}
-	.preview {
-		display: flex;
-		flex-direction: column;
-	}
 	.input-panel {
 		width: 100%;
 	}
 	.input-graphic {
-		width: auto;
-		height: max-content;
+		display: none;
 	}
 	.responsive-banner {
 		display: none;

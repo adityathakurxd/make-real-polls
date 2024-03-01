@@ -1,10 +1,10 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useHMSActions } from '@100mslive/react-sdk'
-import { useEditor, useToasts } from '@tldraw/tldraw'
 import Modal from './Modal'
 import { HMSPollQuestionType } from './constants'
-import { makeReal } from '../makeReal'
 import { useQuestionContext } from '../context'
+import { makeReal } from '../makeReal'
+import { useEditor, useToasts } from '@tldraw/tldraw'
 
 interface PollFormProps {
 	onClose: () => void
@@ -60,11 +60,12 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 				{
 					text: questionData?.question || '',
 					type: 'single-choice' as HMSPollQuestionType,
-					options: [
-						questionData?.options.map((option) => {
-							return { text: option, isCorrectAnswer: false }
-						}),
-					],
+					options: questionData.options.map((option: string) => {
+						return {
+							text: option,
+							isCorrectAnswer: false,
+						}
+					}),
 					skippable: true,
 				},
 			])
@@ -115,6 +116,11 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 			>
 				<button
 					className="secondary"
+					style={{
+						height: 40,
+						width: 120,
+						padding: 8,
+					}}
 					onClick={() => regenerateQuestion(localQuestionData.question)}
 				>
 					Regenerate

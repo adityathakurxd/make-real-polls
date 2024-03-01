@@ -144,13 +144,7 @@ const JoinForm = () => {
 			</div>
 
 			<div className="input-graphic">
-				<Image
-					alt="Generate Polls with AI"
-					src="/images/pollsAI.png"
-					priority
-					width={625}
-					height={530}
-				/>
+				<img alt="Generate Polls with AI" src="/images/pollsAI.png" width={600} />
 			</div>
 		</>
 	)

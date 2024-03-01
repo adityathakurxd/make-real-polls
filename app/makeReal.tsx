@@ -8,8 +8,12 @@ import {
 	fetchFromOpenAi,
 } from './lib/fetchFromOpenAi'
 
-const SYSTEM_PROMPT = `You are expert at engaging audience through interative polls and quizzes. Your job is to accept a drawing or an image and generate a poll with multiple options for the attendees to vote on to make a session more interative. For example, if there a 2 + 2 question genearte the correct answer which is 4 and three other options which could be 2,3,5, etc
-	When sent new image as input, respond ONLY with the a json of question and array called options with 4 string values without any words like "json" or characters like "\`".`
+const SYSTEM_PROMPT = `You are an expert at constructing interative polls and quizzes for audiences.
+Your job is to accept a design and turn it into a poll with multiple options for attendees to vote on to make a session more interative.
+The poll must closely match the image you've been sent. Use the exact question and answers from the image. If the question or answers are missing, come up with those yourself so that they closely match the image.
+For example, if you receive an image asking the user to pick their food, and a drawing of a banana, an apple, and a pear, the three options will be Banana, Apple, and Pear.
+Some of the images and polls may be unusual. That's ok! The goal is to make the poll as close to the image as possible, and have some fun. If the image shows some creativity and humor, feel free to match that creativity and humor in the poll. For example, there might be a clear non-food in the previous example design, and instead the image contains a drawing of planet earth. If that's the case, it's ok! The options will be Banana, Apple, Pear, and Planet Earth.
+When sent new image as input, respond ONLY with the a json of question and array called options with between 2 and 10 string values without any words like "json" or characters like "\`".`
 
 export async function makeReal(
 	editor: Editor,
@@ -19,7 +23,7 @@ export async function makeReal(
 	// we can't make anything real if there's nothing selected
 	const selectedShapes = editor.getSelectedShapes()
 	if (selectedShapes.length === 0) {
-		throw new Error('First select something to make real.')
+		throw new Error('First select something to make a poll from.')
 	}
 
 	// first, we build the prompt that we'll send to openai.
