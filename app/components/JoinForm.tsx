@@ -101,6 +101,11 @@ const JoinForm = () => {
 						click on create poll. That’s it.
 					</p>
 				</div>
+				{roomCodeParam ? (
+					<div className="bottom-banner">
+						<div className="bottom-notif body-regular-text">{"You've been invited!"}</div>
+					</div>
+				) : null}
 				<form onSubmit={handleSubmit}>
 					<div className="input-container">
 						<div className="input-label">Your Name</div>
@@ -128,14 +133,11 @@ const JoinForm = () => {
 					)}
 
 					<button type="submit" className="btn-primary primary">
-						Join Room {roomCodeParam}
-						<ArrowRightIcon style={{ height: '15px', width: '15px', paddingLeft: '5px' }} />
+						{roomCodeParam ? 'Accept Invite' : 'Join Room'}
+						<ArrowRightIcon height={20} width={20} style={{ marginLeft: '4px' }} />
 					</button>
 				</form>
-				<div className="bottom-banner">
-					<div className="bottom-room-info">PUBLIC ROOM</div>
-					<div className="bottom-notif body-regular-text ">There might be others in the room</div>
-				</div>
+
 				<div className="responsive-banner">
 					<div className="responsive-banner-info">PLEASE VIEW IN A DESKTOP</div>
 				</div>

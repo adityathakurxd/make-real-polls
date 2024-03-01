@@ -212,11 +212,10 @@ h4 {
 }
 
 .body-regular-text {
-	/* Body 2-Regular */
 	text-align: center;
 	font-size: 14px;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 500;
 	line-height: 20px;
 	letter-spacing: 0.25px;
 }
@@ -287,6 +286,8 @@ form {
 	margin: 30px auto;
 	border-radius: 8px;
 	padding: 20px;
+	padding-top: 0;
+	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -497,7 +498,7 @@ button:disabled {
 	border: none;
 	display: flex;
 	height: 40px;
-	width: 120px;
+	min-width: 120px;
 	padding: 8px;
 	justify-content: center;
 	align-items: center;
