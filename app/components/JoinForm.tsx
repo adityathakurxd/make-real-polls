@@ -19,7 +19,6 @@ const JoinForm = () => {
 	// Type the event parameter
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-
 		if (roomCodeParam) {
 			try {
 				localStorage.setItem('roomCode', roomCodeParam)
@@ -58,6 +57,7 @@ const JoinForm = () => {
 					if (data.length >= 2) {
 						const roomCodeForStudent = data[0].code
 						const roomCodeForTeacher = data[1].code
+						localStorage.setItem('roomCode', roomCodeForTeacher)
 						const authToken = await hmsActions.getAuthTokenByRoomCode({
 							roomCode: activeTabRole === ROLES.TEACHER ? roomCodeForTeacher : roomCodeForStudent,
 						})

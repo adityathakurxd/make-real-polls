@@ -16,7 +16,7 @@ const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 function Conference() {
 	const peers = useHMSStore(selectPeers)
-	const roomCode = localStorage.getItem('roomCode') ?? ''
+	const roomCode = localStorage.getItem('roomCode')
 
 	const store = useYjsStore({
 		roomId: roomCode,
