@@ -64,24 +64,27 @@ const JoinForm = () => {
 						try {
 							await hmsActions.join({ userName: inputRef.current.value, authToken })
 						} catch (e) {
-							addToast({
-								icon: 'cross-2',
-								title: 'Failed to join the room',
-							})
+							// addToast({
+							// 	icon: 'cross-2',
+							// 	title: 'Failed to join the room',
+							// })
+							console.log('Failed to join the room', e)
 							setTimeout(() => window.location.reload(), 2000)
 						}
 					}
 				} else {
-					addToast({
-						icon: 'cross-2',
-						title: 'Failed to create a new room',
-					})
+					// addToast({
+					// 	icon: 'cross-2',
+					// 	title: 'Failed to create a new room',
+					// })
+					console.log('Failed to join the room 2', e)
 				}
 			} catch (e) {
-				addToast({
-					icon: 'cross-2',
-					title: 'Failed to join room',
-				})
+				// addToast({
+				// 	icon: 'cross-2',
+				// 	title: 'Failed to join room',
+				// })
+				console.log('Failed to join the room 3', e)
 			}
 		}
 	}
