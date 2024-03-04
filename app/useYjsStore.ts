@@ -21,7 +21,7 @@ import * as Y from 'yjs'
 import { DEFAULT_STORE } from './default_store'
 
 export function useYjsStore({
-	roomId = 'example',
+	roomId,
 	hostUrl = "wss://demo-yjs-server-production.up.railway.app",
 	shapeUtils = [],
 }: Partial<{

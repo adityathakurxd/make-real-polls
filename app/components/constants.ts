@@ -4,3 +4,5 @@ export enum HMSPollQuestionType {
 	SHORT_ANSWER = 'short-answer',
 	LONG_ANSWER = 'long-answer',
 }
+
+export const ROLES = { TEACHER: 'teacher', STUDENT: 'student' }

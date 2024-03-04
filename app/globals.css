@@ -215,11 +215,10 @@ h4 {
 }
 
 .body-regular-text {
-	/* Body 2-Regular */
 	text-align: center;
 	font-size: 14px;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 500;
 	line-height: 20px;
 	letter-spacing: 0.25px;
 }
@@ -290,6 +289,8 @@ form {
 	margin: 30px auto;
 	border-radius: 8px;
 	padding: 20px;
+	padding-top: 0;
+	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -491,7 +492,7 @@ button:hover {
 	border: none;
 	display: flex;
 	height: 40px;
-	width: 120px;
+	min-width: 120px;
 	padding: 8px;
 	justify-content: center;
 	align-items: center;
@@ -501,6 +502,33 @@ button:hover {
 	background: white;
 	color: black;
 	border: 1px solid black;
+}
+
+.invite-banner {
+	display: flex;
+	padding: 8px;
+	align-items: center;
+	gap: 8px;
+	border-radius: var(--Radius-1, 8px);
+	border: 1px solid var(--Border-Light, #b8c4d5);
+	border: 1px solid var(--Border-Light, color(display-p3 0.7373 0.7686 0.8235));
+}
+
+.invite-text {
+	font-size: 10px;
+	font-weight: 800;
+	display: flex;
+	padding: 4px 8px;
+	align-items: center;
+	gap: 4px;
+	border-radius: 4px;
+	background: var(--Primary-Dark, #00366e);
+	background: var(--Primary-Dark, color(display-p3 0.08 0.2031 0.4));
+	color: rgba(255, 255, 255, 0.98);
+}
+
+.invite-link {
+	color: rgba(0, 0, 0, 0.8);
 }
 
 @media screen and (max-width: 1024px) {
