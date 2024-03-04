@@ -10,16 +10,14 @@ import { useState } from 'react'
 import { Pagination } from './Pagination'
 import { LiveResults } from './LiveResults'
 import Footer from './Footer'
-import CopyButton from './CopyButton'
 
 const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 function Conference() {
 	const peers = useHMSStore(selectPeers)
-	const roomCode = localStorage.getItem('roomCode')
 
 	const store = useYjsStore({
-		roomId: roomCode,
+		roomId: 'example17',
 		hostUrl: HOST_URL,
 	})
 
@@ -44,10 +42,6 @@ function Conference() {
 					) : null}
 				</div>
 				<LiveResults />
-				<div className="invite-banner">
-					<div className="invite-text">COPY INVITE LINK</div>
-					<CopyButton value={`make-real-polls.vercel.app/?room=${roomCode}`} />
-				</div>
 				<Footer />
 			</div>
 			<div className="editor">
