@@ -4,7 +4,7 @@ import '@tldraw/tldraw/tldraw.css'
 import { TldrawLogo } from '../components/TldrawLogo'
 import { CreatePollButton } from '../components/CreatePollButton'
 import './styles.css'
-import { Tldraw } from '@tldraw/tldraw'
+import { Tldraw, coreShapes } from '@tldraw/tldraw'
 import { useYjsStore } from '../useYjsStore'
 import { useState } from 'react'
 import { Pagination } from './Pagination'
@@ -16,7 +16,7 @@ const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 function Conference() {
 	const peers = useHMSStore(selectPeers)
-	const roomCode = localStorage.getItem('roomCode')
+	const roomCode = localStorage.getItem('roomCode') ?? ''
 
 	const store = useYjsStore({
 		roomId: roomCode,
@@ -48,6 +48,7 @@ function Conference() {
 					<div className="invite-text">COPY INVITE LINK</div>
 					<CopyButton value={`make-real-polls.vercel.app/?room=${roomCode}`} />
 				</div>
+				{/* <div>Invite others: make-real-polls.vercel.app/?room={roomCode}</div> */}
 				<Footer />
 			</div>
 			<div className="editor">
