@@ -39,9 +39,11 @@ const JoinForm = () => {
 				})
 
 				const hmsRoomsAPIResponse = await response.json()
+				console.log('hmsRoomsAPIResponse', hmsRoomsAPIResponse)
 
 				if (hmsRoomsAPIResponse) {
 					const roomId = hmsRoomsAPIResponse.body.id
+					console.log('roomId', roomId)
 
 					const res = await fetch('/api/create', {
 						method: 'POST',
@@ -52,7 +54,9 @@ const JoinForm = () => {
 					})
 
 					const hmsRoomCodesAPIResponse = await res.json()
+					console.log('room codes', hmsRoomCodesAPIResponse)
 					const data = hmsRoomCodesAPIResponse.body.data
+					console.log('data', data)
 
 					if (data.length >= 2) {
 						const roomCodeForStudent = data[0].code
