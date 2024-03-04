@@ -2,35 +2,57 @@
 import { ArrowRightIcon, Svg100MsLogoIcon } from '@100mslive/react-icons'
 import { useHMSActions } from '@100mslive/react-sdk'
 import Image from 'next/image'
-import { useState, FormEvent, useRef } from 'react'
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
+import { Inter } from 'next/font/google'
 import { useSearchParams } from 'next/navigation'
 import { ROLES } from './constants'
-import { useToasts } from '@tldraw/tldraw'
+
+const inter = Inter({ subsets: ['latin'] })
+
+// Define a type for your state
+type InputValues = {
+	name: string
+	roomCode: string // Assuming roomCode is optional
+}
 
 const JoinForm = () => {
-	const [activeTabRole, setActiveTabRole] = useState(ROLES.TEACHER)
+	const [activeTabRole, setActiveTabRole] = useState('teacher')
 	const hmsActions = useHMSActions()
 
 	const searchParams = useSearchParams()
 	const roomCodeParam = searchParams.get('room') || ''
-	const inputRef = useRef<HTMLInputElement>()
-	const { addToast } = useToasts()
+
+	const handleTabClick = (tab) => {
+		setActiveTabRole(tab)
+	}
+
+	const [inputValues, setInputValues] = useState<InputValues>({
+		name: '',
+		roomCode: '',
+	})
+
+	// Type the event parameter
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setInputValues((prevValues) => ({
+			...prevValues,
+			[e.target.name]: e.target.value,
+		}))
+	}
 
 	// Type the event parameter
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
+		const { name: userName = '', roomCode = '' } = inputValues
+
 		if (roomCodeParam) {
 			try {
 				localStorage.setItem('roomCode', roomCodeParam)
-				const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
-				await hmsActions.join({ userName: inputRef.current.value, authToken })
+				let authToken = ''
+				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
+				await hmsActions.join({ userName, authToken })
 			} catch (e) {
-				console.error(e)
-				addToast({
-					icon: 'cross-2',
-					title: 'Room Code might be invalid or expired. Please try again.',
-				})
-				localStorage.setItem('roomCode', undefined)
+				alert('Room Code might be invalid or expired. Please try again.')
 			}
 		} else {
 			try {
@@ -39,11 +61,9 @@ const JoinForm = () => {
 				})
 
 				const hmsRoomsAPIResponse = await response.json()
-				console.log('hmsRoomsAPIResponse', hmsRoomsAPIResponse)
 
 				if (hmsRoomsAPIResponse) {
 					const roomId = hmsRoomsAPIResponse.body.id
-					console.log('roomId', roomId)
 
 					const res = await fetch('/api/create', {
 						method: 'POST',
@@ -54,41 +74,33 @@ const JoinForm = () => {
 					})
 
 					const hmsRoomCodesAPIResponse = await res.json()
-					console.log('room codes', hmsRoomCodesAPIResponse)
 					const data = hmsRoomCodesAPIResponse.body.data
-					console.log('data', data)
 
 					if (data.length >= 2) {
 						const roomCodeForStudent = data[0].code
 						const roomCodeForTeacher = data[1].code
-						localStorage.setItem('roomCode', roomCodeForTeacher)
-						const authToken = await hmsActions.getAuthTokenByRoomCode({
-							roomCode: activeTabRole === ROLES.TEACHER ? roomCodeForTeacher : roomCodeForStudent,
-						})
-						try {
-							await hmsActions.join({ userName: inputRef.current.value, authToken })
-						} catch (e) {
-							// addToast({
-							// 	icon: 'cross-2',
-							// 	title: 'Failed to join the room',
-							// })
-							console.log('Failed to join the room', e)
-							setTimeout(() => window.location.reload(), 2000)
+
+						let authToken = ''
+
+						if (activeTabRole === 'teacher') {
+							authToken = await hmsActions.getAuthTokenByRoomCode({
+								roomCode: roomCodeForTeacher,
+							})
+
+							localStorage.setItem('roomCode', roomCodeForTeacher)
+						} else {
+							authToken = await hmsActions.getAuthTokenByRoomCode({
+								roomCode: roomCodeForStudent,
+							})
 						}
+
+						await hmsActions.join({ userName, authToken })
 					}
 				} else {
-					// addToast({
-					// 	icon: 'cross-2',
-					// 	title: 'Failed to create a new room',
-					// })
-					console.log('Failed to join the room 2', e)
+					alert('Failed to create a new room')
 				}
 			} catch (e) {
-				// addToast({
-				// 	icon: 'cross-2',
-				// 	title: 'Failed to join room',
-				// })
-				console.log('Failed to join the room 3', e)
+				alert('Failed to join room')
 			}
 		}
 	}
@@ -116,7 +128,7 @@ const JoinForm = () => {
 				<form onSubmit={handleSubmit}>
 					<div className="input-container">
 						<div className="input-label">Your Name</div>
-						<input required id="name" type="text" name="name" ref={inputRef} placeholder="Name" />
+						<input required id="name" type="text" name="name" placeholder="Name" />
 					</div>
 					{roomCodeParam ? null : (
 						<div className="input-container">
