@@ -31,8 +31,8 @@ function Conference() {
 			<div className="conference-section">
 				<div className="peers-container">
 					<div className="peer-count-container">
-						<PeopleIcon />
-						<p className='peer-count-text'> {peerCount}</p>
+						<PeopleIcon className="peer-count-icon" />
+						<p className="peer-count-text"> {peerCount}</p>
 					</div>
 					{peers?.[peerIndex]?.videoTrack ? <Peer peer={peers[peerIndex]} /> : null}
 					{peers?.[peerIndex + 1]?.videoTrack ? <Peer peer={peers[peerIndex + 1]} /> : null}

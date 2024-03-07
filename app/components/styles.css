@@ -64,6 +64,10 @@
 	border-radius: 6px;
 }
 
+.peer-count-icon {
+	padding-left: 5px;
+}
+
 .peer-count-text {
 	padding: 10px 10px 10px 20px;
 }

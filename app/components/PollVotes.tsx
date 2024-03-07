@@ -1,6 +1,7 @@
 import { HMSPoll, selectLocalPeerID, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { useEffect, useState } from 'react'
 import { ProgressBar } from './ProgressBar'
+import { toast } from 'react-toastify'
 
 export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 	const hmsActions = useHMSActions()
@@ -9,7 +10,15 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 	const [voteCount, setVoteCount] = useState<number[]>([])
 	const totalCount = voteCount.reduce((sum, value) => (sum += value), 0)
 	const localPeerId = useHMSStore(selectLocalPeerID)
-	const showEndPollButton = localPeerId === poll.startedBy
+	const isPollAuthor = localPeerId === poll.startedBy
+	const hasVoted = question?.responses?.some((response) => response.peer.peerid === localPeerId)
+
+	const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | undefined>()
+	const [loading, setLoading] = useState(false)
+
+	function handleChange(event: any) {
+		setSelectedOptionIndex(event.target.value)
+	}
 
 	useEffect(() => {
 		const newVoteCount = question.options.map(() => 0)
@@ -34,18 +43,38 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 			<p style={{ fontWeight: '600', color: 'black' }}>{question?.text}</p>
 			{question?.options?.map((option, index) => (
 				<div key={index} style={{ marginBottom: '10px' }}>
-					<div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+					<div style={{ display: 'flex', gap: '5px', marginBottom: '4px' }}>
+						{!isPollAuthor && (
+							<input
+								style={{ cursor: 'pointer' }}
+								type="radio"
+								value={index}
+								checked={Number(selectedOptionIndex) === index}
+								onChange={handleChange}
+								id={'' + index}
+							/>
+						)}
 						<p style={{ color: 'black', fontWeight: '400', fontSize: '14px', margin: 0 }}>
 							{option.text}
 						</p>
-						<p style={{ color: 'black', fontWeight: '400', fontSize: '14px', margin: 0 }}>
-							{voteCount[index]} vote{voteCount[index] === 1 ? '' : 's'}
-						</p>
+						{(isPollAuthor || hasVoted) && (
+							<p
+								style={{
+									color: 'black',
+									fontWeight: '400',
+									fontSize: '14px',
+									margin: 0,
+									marginLeft: 'auto',
+								}}
+							>
+								{voteCount[index]} vote{voteCount[index] === 1 ? '' : 's'}
+							</p>
+						)}
 					</div>
 					<ProgressBar percentage={totalCount ? voteCount[index] / totalCount : 0} />
 				</div>
 			))}
-			{showEndPollButton ? (
+			{isPollAuthor ? (
 				<button
 					style={{
 						width: '100%',
@@ -59,7 +88,29 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 				>
 					End poll
 				</button>
-			) : null}
+			) : (
+				<button
+					style={{
+						width: '100%',
+						textAlign: 'center',
+						// background: 'var(--error_default)',
+						display: 'block',
+						padding: '0.75rem',
+						marginTop: '18px',
+					}}
+					onClick={async () => {
+						await hmsActions.interactivityCenter.addResponsesToPoll(poll.id, [
+							{
+								questionIndex: poll.questions[0].index,
+								option: Number(selectedOptionIndex + 1),
+							},
+						])
+						toast(`Vote submitted!`)
+					}}
+				>
+					Submit
+				</button>
+			)}
 		</div>
 	)
 }
