@@ -12,8 +12,6 @@ import { LiveResults } from './LiveResults'
 import Footer from './Footer'
 import CopyButton from './CopyButton'
 import { PeopleIcon } from '@100mslive/react-icons'
-import { Text } from '@100mslive/roomkit-react'
-
 const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 function Conference() {
@@ -34,9 +32,7 @@ function Conference() {
 				<div className="peers-container">
 					<div className="peer-count-container">
 						<PeopleIcon />
-						<Text variant="sm" css={{ mx: '$4', c: 'inherit' }}>
-							{peerCount}
-						</Text>
+						<p className='peer-count-text'> {peerCount}</p>
 					</div>
 					{peers?.[peerIndex]?.videoTrack ? <Peer peer={peers[peerIndex]} /> : null}
 					{peers?.[peerIndex + 1]?.videoTrack ? <Peer peer={peers[peerIndex + 1]} /> : null}
