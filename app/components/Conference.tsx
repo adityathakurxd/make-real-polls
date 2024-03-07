@@ -4,7 +4,7 @@ import '@tldraw/tldraw/tldraw.css'
 import { TldrawLogo } from '../components/TldrawLogo'
 import { CreatePollButton } from '../components/CreatePollButton'
 import './styles.css'
-import { Tldraw, coreShapes } from '@tldraw/tldraw'
+import { Tldraw } from '@tldraw/tldraw'
 import { useYjsStore } from '../useYjsStore'
 import { useState } from 'react'
 import { Pagination } from './Pagination'
@@ -48,7 +48,6 @@ function Conference() {
 					<div className="invite-text">COPY INVITE LINK</div>
 					<CopyButton value={`make-real-polls.vercel.app/?room=${roomCode}`} />
 				</div>
-				{/* <div>Invite others: make-real-polls.vercel.app/?room={roomCode}</div> */}
 				<Footer />
 			</div>
 			<div className="editor">
