@@ -5,6 +5,7 @@ import { HMSPollQuestionType } from './constants'
 import { useQuestionContext } from '../context'
 import { makeReal } from '../makeReal'
 import { useEditor, useToasts } from '@tldraw/tldraw'
+import { toast } from 'react-toastify'
 
 interface PollFormProps {
 	onClose: () => void
@@ -69,11 +70,15 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 					skippable: true,
 				},
 			])
-			.catch((err: Error) => console.log(err.message))
+			.catch((err: Error) => {
+				console.log(err.message)
+				toast.error('Failed to add question to poll. Please try again or reach out to the team.')
+			})
 
-		await hmsActions.interactivityCenter
-			.startPoll(id)
-			.catch((err: Error) => console.log(err.message))
+		await hmsActions.interactivityCenter.startPoll(id).catch((err: Error) => {
+			console.log(err.message)
+			toast.error('Error starting poll. Please try again or reach out to the team.')
+		})
 		onClose()
 	}
 

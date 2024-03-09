@@ -1,3 +1,4 @@
+'use client'
 import { HMSPoll, selectLocalPeerID, useHMSActions, useHMSStore } from '@100mslive/react-sdk'
 import { useEffect, useState } from 'react'
 import { ProgressBar } from './ProgressBar'
@@ -22,11 +23,17 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 
 	useEffect(() => {
 		const newVoteCount = question.options.map(() => 0)
-		// Option index starts from 1
+		console.log('Initial Vote Count:', newVoteCount)
+		console.log('Initial Responses:', responses)
+		console.log('Question Options:', question.options)
+
 		responses?.forEach((response) => {
 			const count = newVoteCount[response.option - 1] ?? 0
 			newVoteCount[response.option - 1] = count + 1
 		})
+
+		console.log('Updated Vote Count:', newVoteCount)
+		console.log('Question Options:', question.options)
 		setVoteCount(newVoteCount)
 	}, [responses, question])
 
@@ -57,19 +64,17 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 						<p style={{ color: 'black', fontWeight: '400', fontSize: '14px', margin: 0 }}>
 							{option.text}
 						</p>
-						{(isPollAuthor || hasVoted) && (
-							<p
-								style={{
-									color: 'black',
-									fontWeight: '400',
-									fontSize: '14px',
-									margin: 0,
-									marginLeft: 'auto',
-								}}
-							>
-								{voteCount[index]} vote{voteCount[index] === 1 ? '' : 's'}
-							</p>
-						)}
+						<p
+							style={{
+								color: 'black',
+								fontWeight: '400',
+								fontSize: '14px',
+								margin: 0,
+								marginLeft: 'auto',
+							}}
+						>
+							{voteCount[index]} vote{voteCount[index] === 1 ? '' : 's'}
+						</p>
 					</div>
 					<ProgressBar percentage={totalCount ? voteCount[index] / totalCount : 0} />
 				</div>
@@ -93,19 +98,27 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 					style={{
 						width: '100%',
 						textAlign: 'center',
-						// background: 'var(--error_default)',
+						background: 'var(--primary_default)',
+						color: 'white',
 						display: 'block',
 						padding: '0.75rem',
 						marginTop: '18px',
 					}}
+					disabled={hasVoted}
 					onClick={async () => {
-						await hmsActions.interactivityCenter.addResponsesToPoll(poll.id, [
-							{
-								questionIndex: poll.questions[0].index,
-								option: Number(selectedOptionIndex + 1),
-							},
-						])
-						toast(`Vote submitted!`)
+						try {
+							await hmsActions.interactivityCenter
+								.addResponsesToPoll(poll.id, [
+									{
+										questionIndex: poll.questions[0].index,
+										option: Number(selectedOptionIndex + 1),
+									},
+								])
+								.then(() => toast(`Your vote has been submitted for "${question.text}`))
+						} catch (err) {
+							console.log(err.message)
+							toast.error('Failed to submit vote. Please try again or reach out to the team.')
+						}
 					}}
 				>
 					Submit
