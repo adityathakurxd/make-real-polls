@@ -15,11 +15,6 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 	const hasVoted = question?.responses?.some((response) => response.peer.peerid === localPeerId)
 
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | undefined>()
-	const [loading, setLoading] = useState(false)
-
-	function handleChange(event: any) {
-		setSelectedOptionIndex(event.target.value)
-	}
 
 	useEffect(() => {
 		const newVoteCount = question.options.map(() => 0)
@@ -56,8 +51,8 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 								style={{ cursor: 'pointer' }}
 								type="radio"
 								value={index}
-								checked={Number(selectedOptionIndex) === index}
-								onChange={handleChange}
+								checked={selectedOptionIndex === index}
+								onChange={() => setSelectedOptionIndex(index)}
 								id={'' + index}
 							/>
 						)}
@@ -111,7 +106,7 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 								.addResponsesToPoll(poll.id, [
 									{
 										questionIndex: poll.questions[0].index,
-										option: Number(selectedOptionIndex + 1),
+										option: selectedOptionIndex + 1,
 									},
 								])
 								.then(() => toast(`Your vote has been submitted for "${question.text}`))
