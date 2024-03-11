@@ -1,58 +1,30 @@
 'use client'
 import { ArrowRightIcon, RefreshIcon, Svg100MsLogoIcon } from '@100mslive/react-icons'
 import { useHMSActions } from '@100mslive/react-sdk'
-import Image from 'next/image'
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
-import { Inter } from 'next/font/google'
+import { useState, FormEvent } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ROLES } from './constants'
 
-const inter = Inter({ subsets: ['latin'] })
-
-// Define a type for your state
-type InputValues = {
-	name: string
-	roomCode: string // Assuming roomCode is optional
-}
-
 const JoinForm = () => {
-	const [activeTabRole, setActiveTabRole] = useState('teacher')
+	const [activeTabRole, setActiveTabRole] = useState(ROLES.TEACHER)
 	const hmsActions = useHMSActions()
 
 	const searchParams = useSearchParams()
 	const roomCodeParam = searchParams.get('room') || ''
 	const [loading, setLoading] = useState(false)
 
-	const handleTabClick = (tab) => {
-		setActiveTabRole(tab)
-	}
-
-	const [inputValues, setInputValues] = useState<InputValues>({
-		name: '',
-		roomCode: '',
-	})
-
-	// Type the event parameter
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInputValues((prevValues) => ({
-			...prevValues,
-			[e.target.name]: e.target.value,
-		}))
-	}
+	const [name, setName] = useState<string>('')
 
 	// Type the event parameter
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setLoading(true)
 
-		const { name: userName = '', roomCode = '' } = inputValues
-
 		if (roomCodeParam) {
 			try {
 				localStorage.setItem('roomCode', roomCodeParam)
-				let authToken = ''
-				authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
-				await hmsActions.join({ userName, authToken })
+				const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode: roomCodeParam })
+				await hmsActions.join({ userName: name, authToken })
 			} catch (e) {
 				alert('Room Code might be invalid or expired. Please try again.')
 			}
@@ -83,12 +55,10 @@ const JoinForm = () => {
 						const roomCodeForTeacher = data[1].code
 
 						let authToken = ''
-
-						if (activeTabRole === 'teacher') {
+						if (activeTabRole === ROLES.TEACHER) {
 							authToken = await hmsActions.getAuthTokenByRoomCode({
 								roomCode: roomCodeForTeacher,
 							})
-
 							localStorage.setItem('roomCode', roomCodeForTeacher)
 						} else {
 							authToken = await hmsActions.getAuthTokenByRoomCode({
@@ -96,7 +66,7 @@ const JoinForm = () => {
 							})
 						}
 
-						await hmsActions.join({ userName, authToken })
+						await hmsActions.join({ userName: name, authToken })
 					}
 				} else {
 					setLoading(false)
@@ -132,7 +102,14 @@ const JoinForm = () => {
 				<form onSubmit={handleSubmit}>
 					<div className="input-container">
 						<div className="input-label">Your Name</div>
-						<input required id="name" type="text" name="name" placeholder="Name" />
+						<input
+							required
+							id="name"
+							type="text"
+							name="name"
+							placeholder="Name"
+							onChange={(e) => setName(e.target.value)}
+						/>
 					</div>
 					{roomCodeParam ? null : (
 						<div className="input-container">
