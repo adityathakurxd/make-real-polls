@@ -155,16 +155,15 @@ const JoinForm = () => {
 						</div>
 					)}
 
-					<button type="submit" className="btn-primary primary">
+					<button type="submit" className="btn-primary primary" disabled={loading}>
 						{loading ? (
 							<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
-						) : roomCodeParam ? (
-							'Accept Invite'
 						) : (
-							'Join Room'
+							<>
+								{roomCodeParam ? 'Accept Invite' : 'Join Room'}
+								<ArrowRightIcon height={20} width={20} style={{ marginLeft: '4px' }} />
+							</>
 						)}
-
-						<ArrowRightIcon height={20} width={20} style={{ marginLeft: '4px' }} />
 					</button>
 				</form>
 
