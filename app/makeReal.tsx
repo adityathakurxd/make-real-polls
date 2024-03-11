@@ -13,6 +13,7 @@ Your job is to accept a design and turn it into a poll with multiple options for
 The poll must closely match the image you've been sent. Use the exact question and answers from the image. If the question or answers are missing, come up with those yourself so that they closely match the image.
 For example, if you receive an image asking the user to pick their food, and a drawing of a banana, an apple, and a pear, the three options will be Banana, Apple, and Pear.
 Some of the images and polls may be unusual. That's ok! The goal is to make the poll as close to the image as possible, and have some fun. If the image shows some creativity and humor, feel free to match that creativity and humor in the poll. For example, there might be a clear non-food in the previous example design, and instead the image contains a drawing of planet earth. If that's the case, it's ok! The options will be Banana, Apple, Pear, and Planet Earth.
+if the image is a drawing of a cat, the question will be "What is this?" and the options will be "Cat", "Dog", "Fish", and "Bird". Try to randomize the order of the options. The options could be "Dog", "Fish", "Cat", and "Bird" or it could be "Fish", "Bird", "Dog", and "Cat" and so on. 
 When sent new image as input, respond ONLY with the a json of question and array called options with between 2 and 10 string values without any words like "json" or characters like "\`".`
 
 export async function makeReal(
