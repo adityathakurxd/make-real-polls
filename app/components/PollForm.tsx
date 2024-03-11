@@ -6,6 +6,7 @@ import { useQuestionContext } from '../context'
 import { makeReal } from '../makeReal'
 import { useEditor, useToasts } from '@tldraw/tldraw'
 import { toast } from 'react-toastify'
+import { RefreshIcon } from '@100mslive/react-icons'
 
 interface PollFormProps {
 	onClose: () => void
@@ -18,6 +19,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 
 	const { questionData, setQuestionData } = useQuestionContext()
 	const [localQuestionData, setLocalQuestionData] = useState(questionData)
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
 		setLocalQuestionData(questionData)
@@ -33,8 +35,10 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 					},
 					question
 				)
+				setLoading(false)
 			} catch (e) {
 				console.error(e)
+				setLoading(false)
 				addToast({
 					icon: 'cross-2',
 					title: 'Something went wrong',
@@ -126,9 +130,16 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 						width: 120,
 						padding: 8,
 					}}
-					onClick={() => regenerateQuestion(localQuestionData.question)}
+					onClick={() => {
+						setLoading(true)
+						regenerateQuestion(localQuestionData.question)
+					}}
 				>
-					Regenerate
+					{loading ? (
+						<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
+					) : (
+						'Regenerate'
+					)}
 				</button>
 				<button className="primary" onClick={createPollOnClick}>
 					Launch Poll
