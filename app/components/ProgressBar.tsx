@@ -9,7 +9,14 @@ export const ProgressBar = ({ percentage = 0 }: { percentage: number }) => {
 				background: 'var(--surface_bright)',
 			}}
 		>
-			<div className="primary" style={{ width: `${percentage * 100}%`, height: '100%' }} />
+			<div
+				style={{
+					width: `${percentage * 100}%`,
+					height: '100%',
+					background: '#2672ed',
+					minWidth: '10px',
+				}}
+			/>
 		</div>
 	)
 }

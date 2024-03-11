@@ -1,4 +1,4 @@
-import { selectPeers, useHMSStore } from '@100mslive/react-sdk'
+import { selectPeerCount, selectPeers, useHMSStore } from '@100mslive/react-sdk'
 import Peer from '../components/Peer'
 import '@tldraw/tldraw/tldraw.css'
 import { TldrawLogo } from '../components/TldrawLogo'
@@ -11,11 +11,12 @@ import { Pagination } from './Pagination'
 import { LiveResults } from './LiveResults'
 import Footer from './Footer'
 import CopyButton from './CopyButton'
-
+import { PeopleIcon } from '@100mslive/react-icons'
 const HOST_URL = 'wss://demo-yjs-server-production.up.railway.app'
 
 function Conference() {
 	const peers = useHMSStore(selectPeers)
+	const peerCount = useHMSStore(selectPeerCount)
 	const roomCode = localStorage.getItem('roomCode') ?? ''
 
 	const store = useYjsStore({
@@ -29,6 +30,10 @@ function Conference() {
 		<div className="conference-component">
 			<div className="conference-section">
 				<div className="peers-container">
+					<div className="peer-count-container">
+						<PeopleIcon className="peer-count-icon" />
+						<p className="peer-count-text"> {peerCount}</p>
+					</div>
 					{peers?.[peerIndex]?.videoTrack ? <Peer peer={peers[peerIndex]} /> : null}
 					{peers?.[peerIndex + 1]?.videoTrack ? <Peer peer={peers[peerIndex + 1]} /> : null}
 

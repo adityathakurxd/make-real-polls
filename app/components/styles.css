@@ -52,6 +52,26 @@
 	width: 100%;
 }
 
+.peer-count-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 0px;
+	border: solid 1px black;
+	width: fit-content;
+	height: 40px;
+	border-radius: 6px;
+}
+
+.peer-count-icon {
+	padding-left: 5px;
+}
+
+.peer-count-text {
+	padding: 10px 10px 10px 20px;
+}
+
 /* You can add more specific styles here */
 .tlui-navigation-zone {
 	display: none;

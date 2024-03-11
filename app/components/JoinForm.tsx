@@ -1,5 +1,5 @@
 'use client'
-import { ArrowRightIcon, Svg100MsLogoIcon } from '@100mslive/react-icons'
+import { ArrowRightIcon, RefreshIcon, Svg100MsLogoIcon } from '@100mslive/react-icons'
 import { useHMSActions } from '@100mslive/react-sdk'
 import Image from 'next/image'
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
@@ -21,6 +21,7 @@ const JoinForm = () => {
 
 	const searchParams = useSearchParams()
 	const roomCodeParam = searchParams.get('room') || ''
+	const [loading, setLoading] = useState(false)
 
 	const handleTabClick = (tab) => {
 		setActiveTabRole(tab)
@@ -42,6 +43,7 @@ const JoinForm = () => {
 	// Type the event parameter
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		setLoading(true)
 
 		const { name: userName = '', roomCode = '' } = inputValues
 
@@ -97,9 +99,11 @@ const JoinForm = () => {
 						await hmsActions.join({ userName, authToken })
 					}
 				} else {
+					setLoading(false)
 					alert('Failed to create a new room')
 				}
 			} catch (e) {
+				setLoading(false)
 				alert('Failed to join room')
 			}
 		}
@@ -151,9 +155,15 @@ const JoinForm = () => {
 						</div>
 					)}
 
-					<button type="submit" className="btn-primary primary">
-						{roomCodeParam ? 'Accept Invite' : 'Join Room'}
-						<ArrowRightIcon height={20} width={20} style={{ marginLeft: '4px' }} />
+					<button type="submit" className="btn-primary primary" disabled={loading}>
+						{loading ? (
+							<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
+						) : (
+							<>
+								{roomCodeParam ? 'Accept Invite' : 'Join Room'}
+								<ArrowRightIcon height={20} width={20} style={{ marginLeft: '4px' }} />
+							</>
+						)}
 					</button>
 				</form>
 

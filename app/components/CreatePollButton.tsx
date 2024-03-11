@@ -6,6 +6,8 @@ import { useCallback, useState } from 'react'
 import { useQuestionContext } from '../context'
 import { makeReal } from '../makeReal'
 import PollForm from './PollForm'
+import { selectLocalPeerRoleName, useHMSStore } from '@100mslive/react-sdk'
+import { ROLES } from './constants'
 
 export function CreatePollButton() {
 	const editor = useEditor()
@@ -14,6 +16,8 @@ export function CreatePollButton() {
 	const [pollFormIsShown, setPollFormIsShown] = useState(false)
 	const [fetchingQuestion, setFetchingQuestion] = useState(false)
 	const { questionData, setQuestionData } = useQuestionContext()
+	const localPeerRoleName = useHMSStore(selectLocalPeerRoleName)
+	const showCreatePollButton = localPeerRoleName === ROLES.TEACHER
 
 	const hidePollFormHandler = () => {
 		setPollFormIsShown(false)
@@ -44,21 +48,23 @@ export function CreatePollButton() {
 	return (
 		<>
 			{pollFormIsShown && questionData && <PollForm onClose={hidePollFormHandler} />}
-			<button
-				title="Create poll"
-				className="create-poll-button"
-				onClick={handleClick}
-				disabled={fetchingQuestion}
-			>
-				{fetchingQuestion ? (
-					<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
-				) : (
-					<>
-						<span className="create-poll-text">Create Poll</span>
-						<SparkleIcon style={{ marginRight: -4 }} />
-					</>
-				)}
-			</button>
+			{showCreatePollButton && (
+				<button
+					title="Create poll"
+					className="create-poll-button"
+					onClick={handleClick}
+					disabled={fetchingQuestion}
+				>
+					{fetchingQuestion ? (
+						<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
+					) : (
+						<>
+							<span className="create-poll-text">Create Poll</span>
+							<SparkleIcon style={{ marginRight: -4 }} />
+						</>
+					)}
+				</button>
+			)}
 		</>
 	)
 }

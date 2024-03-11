@@ -5,6 +5,8 @@ import { HMSPollQuestionType } from './constants'
 import { useQuestionContext } from '../context'
 import { makeReal } from '../makeReal'
 import { useEditor, useToasts } from '@tldraw/tldraw'
+import { toast } from 'react-toastify'
+import { RefreshIcon } from '@100mslive/react-icons'
 
 interface PollFormProps {
 	onClose: () => void
@@ -17,6 +19,7 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 
 	const { questionData, setQuestionData } = useQuestionContext()
 	const [localQuestionData, setLocalQuestionData] = useState(questionData)
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {
 		setLocalQuestionData(questionData)
@@ -32,8 +35,10 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 					},
 					question
 				)
+				setLoading(false)
 			} catch (e) {
 				console.error(e)
+				setLoading(false)
 				addToast({
 					icon: 'cross-2',
 					title: 'Something went wrong',
@@ -69,11 +74,15 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 					skippable: true,
 				},
 			])
-			.catch((err: Error) => console.log(err.message))
+			.catch((err: Error) => {
+				console.log(err.message)
+				toast.error('Failed to add question to poll. Please try again or reach out to the team.')
+			})
 
-		await hmsActions.interactivityCenter
-			.startPoll(id)
-			.catch((err: Error) => console.log(err.message))
+		await hmsActions.interactivityCenter.startPoll(id).catch((err: Error) => {
+			console.log(err.message)
+			toast.error('Error starting poll. Please try again or reach out to the team.')
+		})
 		onClose()
 	}
 
@@ -121,9 +130,16 @@ const PollForm: React.FC<PollFormProps> = ({ onClose }) => {
 						width: 120,
 						padding: 8,
 					}}
-					onClick={() => regenerateQuestion(localQuestionData.question)}
+					onClick={() => {
+						setLoading(true)
+						regenerateQuestion(localQuestionData.question)
+					}}
 				>
-					Regenerate
+					{loading ? (
+						<RefreshIcon style={{ animation: 'spin 2s linear infinite' }} />
+					) : (
+						'Regenerate'
+					)}
 				</button>
 				<button className="primary" onClick={createPollOnClick}>
 					Launch Poll
