@@ -46,16 +46,14 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 			{question?.options?.map((option, index) => (
 				<div key={index} style={{ marginBottom: '10px' }}>
 					<div style={{ display: 'flex', gap: '5px', marginBottom: '4px' }}>
-						{!isPollAuthor && (
-							<input
-								style={{ cursor: 'pointer' }}
-								type="radio"
-								value={index}
-								checked={selectedOptionIndex === index}
-								onChange={() => setSelectedOptionIndex(index)}
-								id={'' + index}
-							/>
-						)}
+						<input
+							style={{ cursor: 'pointer' }}
+							type="radio"
+							value={index}
+							checked={selectedOptionIndex === index}
+							onChange={() => setSelectedOptionIndex(index)}
+							id={'' + index}
+						/>
 						<p style={{ color: 'black', fontWeight: '400', fontSize: '14px', margin: 0 }}>
 							{option.text}
 						</p>
