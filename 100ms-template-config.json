@@ -1,0 +1,491 @@
+{
+    "template_id": "65a4de78cd666ed1654e1f76",
+    "name": "100ms-whiteboard-polls",
+    "default": "",
+    "region": "ap-south-1",
+    "id": "65a4de78cd666ed1654e1f76",
+    "customerId": "621c44377a9d04e28c60cf85",
+    "appId": "621c44377a9d04e28c60cf86",
+    "roles": {
+        "__internal_recorder": {
+            "name": "__internal_recorder",
+            "role_id": "f2584b09-90f5-4202-914c-33bdc7874ad2",
+            "publishParams": {
+                "allowed": [],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 700,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 1280,
+                    "height": 720
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 30
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 250,
+                                "maxFramerate": 30
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 30
+                            }
+                        ]
+                    },
+                    "screen": {}
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher"
+                ],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "hlsStreaming": false,
+                "rtmpStreaming": false,
+                "browserRecording": false,
+                "sendRoomState": false
+            },
+            "priority": 5,
+            "maxPeerCount": 0
+        },
+        "student": {
+            "name": "student",
+            "role_id": "eb5115c6-b486-4c98-bfc9-8cd808c00c50",
+            "publishParams": {
+                "allowed": [
+                    "video",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 1300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 1300,
+                                "maxFramerate": 30
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 500,
+                                "maxFramerate": 30
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 225,
+                                "maxFramerate": 30
+                            }
+                        ]
+                    },
+                    "screen": {}
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher"
+                ],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "hlsStreaming": false,
+                "rtmpStreaming": false,
+                "browserRecording": false,
+                "sendRoomState": true,
+                "pollRead": true
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "teacher": {
+            "name": "teacher",
+            "role_id": "57f92b6a-9577-4a1c-be16-858c3babde2d",
+            "publishParams": {
+                "allowed": [
+                    "audio",
+                    "video",
+                    "screen"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 1300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 1300,
+                                "maxFramerate": 30
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 500,
+                                "maxFramerate": 30
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 225,
+                                "maxFramerate": 30
+                            }
+                        ]
+                    },
+                    "screen": {}
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher"
+                ],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "hlsStreaming": false,
+                "rtmpStreaming": false,
+                "browserRecording": false,
+                "sendRoomState": true,
+                "endRoom": true,
+                "removeOthers": true,
+                "mute": true,
+                "unmute": true,
+                "changeRole": true,
+                "pollWrite": true,
+                "pollRead": true
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        }
+    },
+    "settings": {
+        "region": "us",
+        "subscribeDegradation": {},
+        "recording": null,
+        "roomState": {
+            "messageInterval": 5,
+            "sendPeerList": true,
+            "stopRoomStateOnJoin": true,
+            "enabled": true
+        },
+        "retry": {}
+    },
+    "destinations": {},
+    "plugins": {
+        "whiteboard": {
+            "permissions": {}
+        }
+    },
+    "createdAt": "2024-01-15T07:27:52.776Z",
+    "updatedAt": "2024-01-15T07:28:47.002Z",
+    "_id": "65a4de78cd666ed1654e1f76",
+    "customer": "621c44377a9d04e28c60cf85",
+    "email": "aditya.thakur@100ms.live",
+    "room_id": "65a4de789873494012ce34ac",
+    "app_name": "100ms-whiteboard-polls.app.100ms.live",
+    "color": "#2F80FF",
+    "logo": "https://100ms.live/images/100ms-logo.png",
+    "theme": "DARK",
+    "tile_shape": "16-9",
+    "font": "INTER",
+    "video_off_avatars": "NONE",
+    "platform": "WEB",
+    "app_type": "WEBINAR",
+    "metadata": "",
+    "chat": true,
+    "screenshare": true,
+    "annotation": true,
+    "background": true,
+    "spotlight": true,
+    "raise_hand": true,
+    "google_drive": true,
+    "youtube": true,
+    "whiteboard": true,
+    "subdomain": "100ms-whiteboard-polls.app.100ms.live",
+    "policy": "100ms-whiteboard-polls",
+    "policy_id": "65a4de78cd666ed1654e1f76",
+    "starter_kit_id": null,
+    "ts_template_id": 10,
+    "deployment_url": null,
+    "icon_url": null,
+    "integration_source": "HMS",
+    "user": 3970,
+    "app_id": "621c44377a9d04e28c60cf86",
+    "room_enabled": true,
+    "role_layouts": {
+        "student": {
+            "id": "65a4de78cc5d3286dfc69139",
+            "role_id": "eb5115c6-b486-4c98-bfc9-8cd808c00c50",
+            "template_id": "65a4de78cd666ed1654e1f76",
+            "app_id": "621c44377a9d04e28c60cf86",
+            "themes": [
+                {
+                    "name": "default",
+                    "default": true,
+                    "palette": {
+                        "primary_default": "#2572ed",
+                        "primary_bright": "#538dff",
+                        "primary_dim": "#002d6d",
+                        "primary_disabled": "#004299",
+                        "on_primary_high": "#FFFFFF",
+                        "on_primary_medium": "#CCDAFF",
+                        "on_primary_low": "#84AAFF",
+                        "secondary_default": "#444954",
+                        "secondary_bright": "#70778B",
+                        "secondary_dim": "#293042",
+                        "secondary_disabled": "#404759",
+                        "on_secondary_high": "#FFFFFF",
+                        "on_secondary_medium": "#D3D9F0",
+                        "on_secondary_low": "#A4ABC0",
+                        "background_default": "#0B0E15",
+                        "background_dim": "#000000",
+                        "surface_default": "#191B23",
+                        "surface_bright": "#272A31",
+                        "surface_brighter": "#2E3038",
+                        "surface_dim": "#11131A",
+                        "on_surface_high": "#EFF0FA",
+                        "on_surface_medium": "#C5C6D0",
+                        "on_surface_low": "#8F9099",
+                        "border_default": "#1D1F27",
+                        "border_bright": "#272A31",
+                        "alert_success": "#36B37E",
+                        "alert_warning": "#FFAB00",
+                        "alert_error_default": "#C74E5B",
+                        "alert_error_bright": "#FFB2B6",
+                        "alert_error_brighter": "#FFEDEC",
+                        "alert_error_dim": "#270005"
+                    },
+                    "theme_type": "THEME_TYPE_DARK"
+                }
+            ],
+            "typography": {
+                "font_family": "Inter"
+            },
+            "logo": {
+                "url": "https://storage.googleapis.com/100ms-cms-prod/cms/100ms_18a29f69f2/100ms_18a29f69f2.png"
+            },
+            "screens": {
+                "preview": {
+                    "default": {
+                        "elements": {
+                            "preview_header": {
+                                "title": "Get Started",
+                                "sub_title": "Enter your name before joining"
+                            },
+                            "join_form": {
+                                "join_btn_type": "JOIN_BTN_TYPE_JOIN_ONLY",
+                                "join_btn_label": "Join Now",
+                                "go_live_btn_label": "Join Session"
+                            },
+                            "virtual_background": {}
+                        }
+                    }
+                },
+                "conferencing": {
+                    "default": {
+                        "elements": {
+                            "chat": {
+                                "initial_state": "CHAT_STATE_CLOSE",
+                                "roles_whitelist": [
+                                    "broadcaster"
+                                ],
+                                "chat_title": "Chat",
+                                "message_placeholder": "Say something...",
+                                "real_time_controls": {}
+                            },
+                            "participant_list": {},
+                            "video_tile_layout": {
+                                "grid": {}
+                            },
+                            "emoji_reactions": {},
+                            "brb": {},
+                            "virtual_background": {}
+                        }
+                    }
+                },
+                "leave": {}
+            },
+            "role": "student"
+        },
+        "teacher": {
+            "id": "65a4de798edb2eff3dcc86e8",
+            "role_id": "57f92b6a-9577-4a1c-be16-858c3babde2d",
+            "template_id": "65a4de78cd666ed1654e1f76",
+            "app_id": "621c44377a9d04e28c60cf86",
+            "themes": [
+                {
+                    "name": "default",
+                    "default": true,
+                    "palette": {
+                        "primary_default": "#2572ed",
+                        "primary_bright": "#538dff",
+                        "primary_dim": "#002d6d",
+                        "primary_disabled": "#004299",
+                        "on_primary_high": "#FFFFFF",
+                        "on_primary_medium": "#CCDAFF",
+                        "on_primary_low": "#84AAFF",
+                        "secondary_default": "#444954",
+                        "secondary_bright": "#70778B",
+                        "secondary_dim": "#293042",
+                        "secondary_disabled": "#404759",
+                        "on_secondary_high": "#FFFFFF",
+                        "on_secondary_medium": "#D3D9F0",
+                        "on_secondary_low": "#A4ABC0",
+                        "background_default": "#0B0E15",
+                        "background_dim": "#000000",
+                        "surface_default": "#191B23",
+                        "surface_bright": "#272A31",
+                        "surface_brighter": "#2E3038",
+                        "surface_dim": "#11131A",
+                        "on_surface_high": "#EFF0FA",
+                        "on_surface_medium": "#C5C6D0",
+                        "on_surface_low": "#8F9099",
+                        "border_default": "#1D1F27",
+                        "border_bright": "#272A31",
+                        "alert_success": "#36B37E",
+                        "alert_warning": "#FFAB00",
+                        "alert_error_default": "#C74E5B",
+                        "alert_error_bright": "#FFB2B6",
+                        "alert_error_brighter": "#FFEDEC",
+                        "alert_error_dim": "#270005"
+                    },
+                    "theme_type": "THEME_TYPE_DARK"
+                }
+            ],
+            "typography": {
+                "font_family": "Inter"
+            },
+            "logo": {
+                "url": "https://storage.googleapis.com/100ms-cms-prod/cms/100ms_18a29f69f2/100ms_18a29f69f2.png"
+            },
+            "screens": {
+                "preview": {
+                    "default": {
+                        "elements": {
+                            "preview_header": {
+                                "title": "Get Started",
+                                "sub_title": "Setup your audio and video before joining"
+                            },
+                            "join_form": {
+                                "join_btn_type": "JOIN_BTN_TYPE_JOIN_ONLY",
+                                "join_btn_label": "Go Live",
+                                "go_live_btn_label": "Go Live"
+                            },
+                            "virtual_background": {}
+                        }
+                    }
+                },
+                "conferencing": {
+                    "default": {
+                        "elements": {
+                            "chat": {
+                                "initial_state": "CHAT_STATE_CLOSE",
+                                "allow_pinning_messages": true,
+                                "public_chat_enabled": true,
+                                "roles_whitelist": [
+                                    "viewer",
+                                    "viewer-on-stage",
+                                    "broadcaster"
+                                ],
+                                "private_chat_enabled": true,
+                                "chat_title": "Chat",
+                                "message_placeholder": "Say something...",
+                                "real_time_controls": {
+                                    "can_disable_chat": true,
+                                    "can_block_user": true,
+                                    "can_hide_message": true
+                                }
+                            },
+                            "participant_list": {},
+                            "video_tile_layout": {
+                                "grid": {
+                                    "enable_spotlighting_peer": true
+                                }
+                            },
+                            "emoji_reactions": {},
+                            "brb": {},
+                            "virtual_background": {}
+                        }
+                    }
+                },
+                "leave": {}
+            },
+            "role": "teacher"
+        }
+    }
+}
