@@ -46,16 +46,14 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 			{question?.options?.map((option, index) => (
 				<div key={index} style={{ marginBottom: '10px' }}>
 					<div style={{ display: 'flex', gap: '5px', marginBottom: '4px' }}>
-						{!isPollAuthor && (
-							<input
-								style={{ cursor: 'pointer' }}
-								type="radio"
-								value={index}
-								checked={selectedOptionIndex === index}
-								onChange={() => setSelectedOptionIndex(index)}
-								id={'' + index}
-							/>
-						)}
+						<input
+							style={{ cursor: 'pointer' }}
+							type="radio"
+							value={index}
+							checked={selectedOptionIndex === index}
+							onChange={() => setSelectedOptionIndex(index)}
+							id={'' + index}
+						/>
 						<p style={{ color: 'black', fontWeight: '400', fontSize: '14px', margin: 0 }}>
 							{option.text}
 						</p>
@@ -74,6 +72,37 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 					<ProgressBar percentage={totalCount ? voteCount[index] / totalCount : 0} />
 				</div>
 			))}
+
+			<button
+				style={{
+					width: '100%',
+					textAlign: 'center',
+					background: 'var(--primary_default)',
+					color: 'white',
+					display: 'block',
+					padding: '0.75rem',
+					margin: '18px 0',
+				}}
+				disabled={hasVoted}
+				onClick={async () => {
+					try {
+						await hmsActions.interactivityCenter
+							.addResponsesToPoll(poll.id, [
+								{
+									questionIndex: poll.questions[0].index,
+									option: selectedOptionIndex + 1,
+								},
+							])
+							.then(() => toast(`Your vote has been submitted for "${question.text}`))
+					} catch (err) {
+						console.log(err.message)
+						toast.error('Failed to submit vote. Please try again or reach out to the team.')
+					}
+				}}
+			>
+				Submit
+			</button>
+
 			{isPollAuthor ? (
 				<button
 					style={{
@@ -82,43 +111,12 @@ export const PollVotes = ({ poll }: { poll: HMSPoll }) => {
 						background: 'var(--error_default)',
 						display: 'block',
 						padding: '0.75rem',
-						marginTop: '18px',
 					}}
 					onClick={() => hmsActions.interactivityCenter.stopPoll(poll.id)}
 				>
 					End poll
 				</button>
-			) : (
-				<button
-					style={{
-						width: '100%',
-						textAlign: 'center',
-						background: 'var(--primary_default)',
-						color: 'white',
-						display: 'block',
-						padding: '0.75rem',
-						marginTop: '18px',
-					}}
-					disabled={hasVoted}
-					onClick={async () => {
-						try {
-							await hmsActions.interactivityCenter
-								.addResponsesToPoll(poll.id, [
-									{
-										questionIndex: poll.questions[0].index,
-										option: selectedOptionIndex + 1,
-									},
-								])
-								.then(() => toast(`Your vote has been submitted for "${question.text}`))
-						} catch (err) {
-							console.log(err.message)
-							toast.error('Failed to submit vote. Please try again or reach out to the team.')
-						}
-					}}
-				>
-					Submit
-				</button>
-			)}
+			) : null}
 		</div>
 	)
 }
