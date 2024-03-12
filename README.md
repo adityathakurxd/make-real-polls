@@ -1,45 +1,40 @@
-# Make Real
+# Polls AI
+Polls AI is a demo to showcase interactivity and start polls from the content on the whiteboard in a few clicks.
 
-Use this repo as a template to create Make Real style apps like
-[makereal.tldraw.com](https://makereal.tldraw.com). To get started:
+Built on top of [tldraw’s](https://tldraw.com/) [Make Real template](https://github.com/tldraw/make-real-starter) and live audio-video powered by [100ms](https://100ms.live/), it uses OpenAI’s GPT Vision to understand the shapes and create an appropriate question with options to launch a poll in an instant and engage the audience. 
 
-1. Use the template and clone your new repo to your computer
+![Polls AI Banner](https://github.com/adityathakurxd/make-real-polls/assets/53579386/7ae149da-4952-4e97-a1b5-87adbdc27a80)
+
+
+<br />
+
+## How to setup locally?
+
+1. Fork the repository and clone it to your computer
 2. Run `npm install` to install dependencies
 3. Get an OpenAI API key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys). Make sure
-   you are at least a
-   [Tier 1](https://platform.openai.com/docs/guides/rate-limits/usage-tiers) API
-   user, which means you have access to GPT-4 Vision. You can check your tier on
-   the [OpenAI API Limits](https://platform.openai.com/account/limits).
+   you are at least a [Tier 1](https://platform.openai.com/docs/guides/rate-limits/usage-tiers) API user, which means you have access to GPT-4 Vision. You can check your tier on the [OpenAI API Limits](https://platform.openai.com/account/limits).
 4. Create a `.env.local` file that contains `OPENAI_API_KEY=your api key here`
-5. Run `npm run dev`
-6. Open [localhost:3000](http://localhost:3000) and make some stuff real!
+5. Head to [100ms Dashboard](https://dashboard.100ms.live/) and create an account or login to an existing one.
+6. Click on the Create Template button on the 100ms Dashboard.
+7. Select 'Import Template' option and from the cloned repository find the `100ms-template-config.json` file and import it to instantly create a template with the required configuration.
+<br />
 
-## How it works
+![Untitled design](https://github.com/adityathakurxd/make-real-polls/assets/53579386/dd326f3b-e96d-4207-a41b-b79de9619107)
 
-Make Real is built with [tldraw](tldraw.dev), a very good React library for
-creating whiteboards and other infinite canvas experiences.
 
-To use it, first draw a mockup for a piece of UI. When
-you're ready, select the drawing, and press the Make Real button.
-We'll capture an image of your selection, and send it to
-[OpenAI's GPT-4V](https://platform.openai.com/docs/guides/vision) along with
-instructions to turn it into a HTML file.
+8.  Once a template is created, copy the Template Id from the Templates section in the side navigation bar and paste it into the `.env.local` file as `TEMPLATE_ID=your template id`.
+9. Now, using the side navigation bar again, navigate to the Developer section.
+10. Copy the Management Token and add it to your `.env.local` file as `MANAGEMENT_TOKEN=your management token here`
 
-We take the HTML response and add it to a tldraw
-[custom shape](https://tldraw.dev/docs/shapes#Custom-shapes). The custom shape
-shows the response in an iframe so that you can interact with it on the canvas. If you
-want to iterate on the response, annotate the iframe, select it all, and press 'Make Real' again.
+<br />
 
-## To make changes
+![Untitled design (1)](https://github.com/adityathakurxd/make-real-polls/assets/53579386/923e7a42-32ca-42b1-89f9-45c971806b80)
 
-To change how Make Real works, start from the [`makeReal()`](./app/makeReal.tsx)
-function. From there, you can change the prompt that gets sent to gpt-4.
 
-If you'd like Make Real to create something other than HTML, you'll need to
-either update the [`ResponseShape`](./app/ResponseShape/ResponseShape.tsx) to
-display something different, or use one of tldraw's built-in shapes like image
-or text.
+12. Run `npm run dev`
+13. Open [localhost:3000](http://localhost:3000) and write some content to launch polls from!
 
-## The dangerous API key input method
 
-For prototyping or at least until the vision APIs are able to support higher usage limits, we've also included the `RiskyButCoolAPIKeyInput`, similar to the one found on [makereal.tldraw.com](https://makereal.tldraw.com). Please use this as carefully and ethically as you can, as users should be reluctant to add API keys to public sites.
+
+We believe using Polls AI, educators can now create polls effortlessly by selecting the content on the whiteboard. This would not only fosters engagement but also allow tutors to continue with their lectures without constant interruptions.
