@@ -1,9 +1,11 @@
 'use server'
 
+import { toast } from 'react-toastify'
+
 export async function fetchFromOpenAi(
 	providedApiKey: string,
 	body: GPT4VCompletionRequest
-): Promise<GPT4VCompletionResponse> {
+): Promise<GPT4VCompletionResponse | string> {
 	const apiKey = providedApiKey ?? process.env.OPENAI_API_KEY
 
 	if (!apiKey) {
@@ -11,9 +13,8 @@ export async function fetchFromOpenAi(
 			'You need to provide an API key. Make sure OPENAI_API_KEY is set in your .env file.'
 		)
 	}
-
 	try {
-		const repsonse = await fetch('https://api.openai.com/v1/chat/completions', {
+		const response = await fetch('https://api.openai.com/v1/chat/completions', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -21,11 +22,15 @@ export async function fetchFromOpenAi(
 			},
 			body: JSON.stringify(body),
 		})
+		const jsonData = await response.json()
 
-		return await repsonse.json()
+		if (jsonData.error) {
+			throw jsonData.error
+		}
+		return jsonData
 	} catch (e) {
 		console.error(e)
-		throw new Error('Sorry, there was an error fetching from OpenAI')
+		return e.message
 	}
 }
 

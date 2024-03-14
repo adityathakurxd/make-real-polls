@@ -7,6 +7,7 @@ import {
 	MessageContent,
 	fetchFromOpenAi,
 } from './lib/fetchFromOpenAi'
+import { toast } from 'react-toastify'
 
 const SYSTEM_PROMPT = `You are an expert at constructing interative polls and quizzes for audiences.
 Your job is to accept a design and turn it into a poll with multiple options for attendees to vote on to make a session more interative.
@@ -42,7 +43,7 @@ export async function makeReal(
 
 		// make a request to openai. `fetchFromOpenAi` is a next.js server action,
 		// so our api key is hidden.
-		const openAiResponse: GPT4VCompletionResponse = await fetchFromOpenAi(
+		const openAiResponse: GPT4VCompletionResponse | string = await fetchFromOpenAi(
 			apiKeyFromDangerousApiKeyInput,
 			{
 				model: 'gpt-4-vision-preview',
@@ -51,6 +52,9 @@ export async function makeReal(
 				messages: prompt,
 			}
 		)
+		if (typeof openAiResponse === 'string') {
+			throw openAiResponse
+		}
 
 		if ('choices' in openAiResponse) {
 			const messageContent = openAiResponse.choices[0].message.content
@@ -60,7 +64,7 @@ export async function makeReal(
 	} catch (e) {
 		// if something went wrong, get rid of the unnecessary response shape
 		// editor.deleteShape(responseShapeId)
-		throw e
+		toast.error(e)
 	}
 }
 

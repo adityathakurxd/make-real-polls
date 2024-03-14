@@ -167,7 +167,7 @@ h4 {
 }
 
 .input__wrapper:not(:focus-within)::after {
-	content: 'Your OpenAI API Key (risky but cool)';
+	content: 'Enter your OpenAI API Key (risky but cool)';
 	display: block;
 	position: absolute;
 	inset: 0px;
@@ -322,10 +322,11 @@ input::placeholder {
 }
 
 .input-label {
+	display: flex;
 	font-size: 14px;
 	font-weight: 500;
 	margin-bottom: 5px;
-	align-items: start;
+	align-items: center;
 }
 
 .tabs-container {

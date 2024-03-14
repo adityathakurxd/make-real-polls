@@ -1,14 +1,11 @@
-import { Icon, useBreakpoint } from '@tldraw/tldraw'
 import { ChangeEvent, useCallback } from 'react'
+import { QuestionIcon } from '@100mslive/react-icons'
+import { useBreakpoint } from '@tldraw/tldraw'
 
 export function RiskyButCoolAPIKeyInput() {
 	const breakpoint = useBreakpoint()
 
-	// Store the API key locally, but ONLY in development mode
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		if (process.env.NODE_ENV === 'development') {
-			localStorage.setItem('makeitreal_key', e.target.value)
-		}
 		if (typeof window !== 'undefined') {
 			sessionStorage.setItem('OPEN_AI_KEY', e.target.value)
 		}
@@ -21,19 +18,14 @@ export function RiskyButCoolAPIKeyInput() {
 	}, [])
 
 	return (
-		<div className={`your-own-api-key ${breakpoint < 5 ? 'your-own-api-key__mobile' : ''}`}>
-			<div className="your-own-api-key__inner">
-				<div className="input__wrapper">
-					<input
-						id="openai_key_risky_but_cool"
-						defaultValue={localStorage.getItem('makeitreal_key') ?? ''}
-						onChange={handleChange}
-					/>
-				</div>
+		<div className="input-container">
+			<div className="input-label">
+				Your OpenAI API Key
 				<button className="question__button" onClick={handleQuestionMessage}>
-					<Icon icon="question" />
+					<QuestionIcon height={20} width={20} />
 				</button>
 			</div>
+			<input type="text" placeholder="OpenAI API Key" onChange={handleChange} />
 		</div>
 	)
 }
