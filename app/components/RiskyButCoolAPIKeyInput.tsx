@@ -25,7 +25,7 @@ export function RiskyButCoolAPIKeyInput() {
 					<QuestionIcon height={20} width={20} />
 				</button>
 			</div>
-			<input type="text" placeholder="OpenAI API Key" onChange={handleChange} />
+			<input type="text" placeholder="OpenAI API Key" onChange={handleChange} required />
 		</div>
 	)
 }
