@@ -38,9 +38,7 @@ export async function makeReal(
 		// If you're using the API key input, we preference the key from there.
 		// It's okay if this is undefined—it will just mean that we'll use the
 		// one in the .env file instead.
-		const apiKeyFromDangerousApiKeyInput = (
-			document.body.querySelector('#openai_key_risky_but_cool') as HTMLInputElement
-		)?.value
+		const apiKeyFromDangerousApiKeyInput = sessionStorage.getItem('OPEN_AI_KEY')
 
 		// make a request to openai. `fetchFromOpenAi` is a next.js server action,
 		// so our api key is hidden.

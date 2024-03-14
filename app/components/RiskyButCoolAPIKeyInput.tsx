@@ -9,6 +9,9 @@ export function RiskyButCoolAPIKeyInput() {
 		if (process.env.NODE_ENV === 'development') {
 			localStorage.setItem('makeitreal_key', e.target.value)
 		}
+		if (typeof window !== 'undefined') {
+			sessionStorage.setItem('OPEN_AI_KEY', e.target.value)
+		}
 	}, [])
 
 	const handleQuestionMessage = useCallback(() => {
