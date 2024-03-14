@@ -1,10 +1,7 @@
 import { ChangeEvent, useCallback } from 'react'
 import { QuestionIcon } from '@100mslive/react-icons'
-import { useBreakpoint } from '@tldraw/tldraw'
 
 export function RiskyButCoolAPIKeyInput() {
-	const breakpoint = useBreakpoint()
-
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		if (typeof window !== 'undefined') {
 			sessionStorage.setItem('OPEN_AI_KEY', e.target.value)
