@@ -4,6 +4,7 @@ import { useHMSActions } from '@100mslive/react-sdk'
 import { useState, FormEvent } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ROLES } from './constants'
+import { RiskyButCoolAPIKeyInput } from './RiskyButCoolAPIKeyInput'
 
 const JoinForm = () => {
 	const [activeTabRole, setActiveTabRole] = useState(ROLES.TEACHER)
@@ -111,6 +112,9 @@ const JoinForm = () => {
 							onChange={(e) => setName(e.target.value)}
 						/>
 					</div>
+
+					<RiskyButCoolAPIKeyInput />
+
 					{roomCodeParam ? null : (
 						<div className="input-container">
 							<div className="input-label">Join as</div>
